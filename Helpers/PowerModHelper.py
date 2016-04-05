@@ -14,12 +14,16 @@ def update_data():
 
 
 def set_switch(switch):
+    if Register.POWERMOD_DATA[str(switch)]['on']:
+        return
     Register.I2C_POWERMOD_DATA |= 1 << switch
     update_data()
     update_flag(switch, True)
 
 
 def unset_switch(switch):
+    if not Register.POWERMOD_DATA[str(switch)]['on']:
+        return
     Register.I2C_POWERMOD_DATA &= ~(1 << switch)
     update_data()
     update_flag(switch, False)

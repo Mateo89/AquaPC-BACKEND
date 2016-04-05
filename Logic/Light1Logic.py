@@ -1,61 +1,62 @@
+import threading
+
 from register import Register
-from Helpers import PowerModHelper
-import datetime
+from Helpers import PowerModHelper, TimesHelper, Light1ModHelper
+from datetime import time
 
 
 def light1_logic():
 
-    if Register.LIGHT1_OVERDRIVE:
+    if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT1)]['override']:
         return
 
-    if not Register.CHANGE_WATER_MODE:
-        time_now = datetime.datetime.now()
-        time_off = time_now.replace(hour=Register.LIGHT1_OFF_HOUR, minute=Register.LIGHT1_OFF_MINUTE, second=0, microsecond=0)
-        time_on = time_now.replace(hour=Register.LIGHT1_ON_HOUR, minute=Register.LIGHT1_ON_MINUTE, second=0, microsecond=0)
-
-        if time_on <= time_now < time_off:
-            turn_on_light()
-        else:
-            turn_off_light()
+    if Register.CHANGE_WATER_MODE:
+        if Register.LAMPS_SETTINGS['1']['water_change_on']:
+            set_percent(Register.LAMPS_SETTINGS['1']['water_change_percent'])
     else:
-        if Register.LIGHT1_CHANGE_WATER_ON_FLAG:
-            turn_on_light()
+        percent = TimesHelper.process_times_states(Register.LAMPS_SETTINGS['1']['times'])
+        set_percent(percent)
 
 
-def turn_on_light():
-    if not Register.I2C_POWERMOD_LIGHT1_FLAG:
-        Register.LIGHT1_PERCENT = 100
-        PowerModHelper.set_switch(Register.I2C_POWERMOD_LIGHT1)
-
-
-def turn_off_light():
-    if Register.I2C_POWERMOD_LIGHT1_FLAG:
-        Register.LIGHT1_PERCENT = 0
-        PowerModHelper.unset_switch(Register.I2C_POWERMOD_LIGHT1)
-
-
-def block_light():
-    Register.LIGHT1_OVERDRIVE = True
-
-
-def unblock_light():
-    Register.LIGHT1_OVERDRIVE = False
+def set_percent(percent):
+    Register.LIGHT1_PERCENT = percent
 
 
 def toggle_light():
     PowerModHelper.toggle_switch(Register.I2C_POWERMOD_LIGHT1)
 
 
-def up_percent(up):
-    percent = Register.LIGHT1_PERCENT + up
-    if percent > 100:
-        percent = 100
-    Register.LIGHT1_PERCENT = percent
+def turn_on():
+    PowerModHelper.set_switch(Register.I2C_POWERMOD_LIGHT1)
 
 
-def down_percent(down):
-    percent = Register.LIGHT1_PERCENT - down
-    if percent < 0:
+def turn_off():
+    PowerModHelper.unset_switch(Register.I2C_POWERMOD_LIGHT1)
+
+
+# kontrolowanie poziomu swiatla
+class Light1Thread(threading.Thread):
+
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+
         percent = 0
-    Register.LIGHT1_PERCENT = percent
+
+        while not Register.EXIT_FLAG:
+
+            if percent < Register.LIGHT1_PERCENT:
+                percent += 1
+                Light1ModHelper.update_data(percent)
+            if percent > Register.LIGHT1_PERCENT:
+                percent -= 1
+                Light1ModHelper.update_data(percent)
+
+            if percent == 0:
+                turn_off()
+            else:
+                turn_on()
+
+            time.sleep(1)
 

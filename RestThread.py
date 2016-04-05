@@ -311,7 +311,6 @@ def state_switches_delete():
     return state_switches_get()
 
 
-
 @app.route('/api/actions/pomp/<int:id>/refill',methods=['PUT'])
 def actions_pomp_refill_put(id):
     BottleLogic.refill_bottle(id)
@@ -323,6 +322,6 @@ def actions_pomp_dose_put(id):
     BottleLogic.dose_from_bottle(str(id),request.json)
     return settings_pomp_dose_get(id)
 
-def run_server():
 
+def run_server():
     app.run(debug=True,use_reloader=False)
