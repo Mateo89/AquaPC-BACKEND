@@ -1,0 +1,12 @@
+{
+    "1": {
+        "name": "JBL e1501",
+        "on": true,
+        "water_change_off": true
+    },
+    "2": {
+        "name": "TetraTEC EX 700",
+        "on": true,
+        "water_change_off": true
+    }
+}

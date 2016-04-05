@@ -1,0 +1,56 @@
+{
+    "full_day": false,
+    "on": false,
+    "times": [
+        {
+            "day_of_week": 1,
+            "from": "10:30",
+            "name": "PONIEDZIALEK",
+            "on": true,
+            "to": "18.23"
+        },
+        {
+            "day_of_week": 2,
+            "from": "10:30",
+            "name": "WTOREK",
+            "on": false,
+            "to": "18.23"
+        },
+        {
+            "day_of_week": 3,
+            "from": "10:30",
+            "name": "SRODA",
+            "on": false,
+            "to": "18.23"
+        },
+        {
+            "day_of_week": 4,
+            "from": "10:30",
+            "name": "CZWARTEK",
+            "on": false,
+            "to": "18.23"
+        },
+        {
+            "day_of_week": 5,
+            "from": "10:30",
+            "name": "PIATEK",
+            "on": false,
+            "to": "18.23"
+        },
+        {
+            "day_of_week": 6,
+            "from": "10:30",
+            "name": "SOBOTA",
+            "on": false,
+            "to": "18.23"
+        },
+        {
+            "day_of_week": 7,
+            "from": "10:30",
+            "name": "NIEDZIELA",
+            "on": false,
+            "to": "18.23"
+        }
+    ],
+    "water_change_off": true
+}

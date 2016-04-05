@@ -1,0 +1,151 @@
+{
+    "1": {
+        "on": true,
+        "percent_max": 100,
+        "temp_alert": 45.0,
+        "times": [
+            {
+                "day_of_week": 0,
+                "name": "PONIEDZIALEK",
+                "on": true,
+                "states": [
+                    {
+                        "percent": "100",
+                        "time": "13:00"
+                    },
+                    {
+                        "percent": 0,
+                        "time": "23:23"
+                    }
+                ]
+            },
+            {
+                "day_of_week": 1,
+                "name": "WTOREK",
+                "on": true,
+                "states": [
+                    {
+                        "percent": "20",
+                        "time": "11:00"
+                    },
+                    {
+                        "percent": "100",
+                        "time": "13:00"
+                    },
+                    {
+                        "percent": 0,
+                        "time": "21:00"
+                    }
+                ]
+            },
+            {
+                "day_of_week": 2,
+                "name": "SRODA",
+                "on": true,
+                "states": []
+            },
+            {
+                "day_of_week": 3,
+                "name": "CZWARTEK",
+                "on": true,
+                "states": [
+                    {
+                        "percent": 0,
+                        "time": "10:00"
+                    }
+                ]
+            },
+            {
+                "day_of_week": 4,
+                "name": "PIATEK",
+                "on": true,
+                "states": []
+            },
+            {
+                "day_of_week": 5,
+                "name": "SOBOTA",
+                "on": true,
+                "states": []
+            },
+            {
+                "day_of_week": 6,
+                "name": "NIEDZIELA",
+                "on": true,
+                "states": []
+            }
+        ],
+        "use_heater_delta": "6",
+        "use_heater_on": true,
+        "water_change_on": true
+    },
+    "2": {
+        "change_water_on": true,
+        "on": true,
+        "percent_max": 100,
+        "times": [
+            {
+                "day_of_week": 0,
+                "name": "PONIEDZIALEK",
+                "on": false,
+                "states": [
+                    {
+                        "percent": 0
+                    }
+                ]
+            },
+            {
+                "day_of_week": 1,
+                "name": "WTOREK",
+                "on": false,
+                "states": [
+                    {
+                        "percent": 0
+                    }
+                ]
+            },
+            {
+                "day_of_week": 2,
+                "name": "SRODA",
+                "on": true,
+                "states": [
+                    {
+                        "percent": 0,
+                        "time": "10:20"
+                    }
+                ]
+            },
+            {
+                "day_of_week": 3,
+                "name": "CZWARTEK",
+                "on": false,
+                "states": []
+            },
+            {
+                "day_of_week": 4,
+                "name": "PIATEK",
+                "on": true,
+                "states": [
+                    {
+                        "percent": 0,
+                        "time": "11:23"
+                    }
+                ]
+            },
+            {
+                "day_of_week": 5,
+                "name": "SOBOTA",
+                "on": false,
+                "states": []
+            },
+            {
+                "day_of_week": 6,
+                "name": "NIEDZIELA",
+                "on": false,
+                "states": []
+            }
+        ],
+        "use_heater_delta": 0,
+        "use_heater_on": false,
+        "water_change_on": true
+    }
+}

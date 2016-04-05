@@ -1,0 +1,374 @@
+{
+    "1": {
+        "alert": true,
+        "alertpercent": 10,
+        "capacity": 500,
+        "dosed": false,
+        "ml_per_sec": 2.2,
+        "name": "AZOT",
+        "on": true,
+        "percent": 100,
+        "state": 500,
+        "times": [
+            {
+                "day_of_week": 0,
+                "dose": 1.2,
+                "name": "PONIEDZIALEK",
+                "on": true,
+                "time": "19:30"
+            },
+            {
+                "day_of_week": 1,
+                "dose": 2.4,
+                "name": "WTOREK",
+                "on": false,
+                "time": "15:30"
+            },
+            {
+                "day_of_week": 2,
+                "dose": 1.8,
+                "name": "SRODA",
+                "on": false,
+                "time": "17:30"
+            },
+            {
+                "day_of_week": 3,
+                "dose": 2.6,
+                "name": "CZWARTEK",
+                "on": true,
+                "time": "14:30"
+            },
+            {
+                "day_of_week": 4,
+                "dose": 3.8,
+                "name": "PIATEK",
+                "on": false,
+                "time": "03:30"
+            },
+            {
+                "day_of_week": 5,
+                "dose": 3.4,
+                "name": "SOBOTA",
+                "on": false,
+                "time": "06:30"
+            },
+            {
+                "day_of_week": 6,
+                "dose": 1,
+                "name": "NIEDZIELA",
+                "on": true,
+                "time": "11:30"
+            }
+        ]
+    },
+    "2": {
+        "alert": true,
+        "alertpercent": 10,
+        "capacity": "400",
+        "dosed": false,
+        "ml_per_sec": 2.2,
+        "name": "POTAS",
+        "on": true,
+        "percent": 30,
+        "state": 500,
+        "times": [
+            {
+                "day_of_week": 0,
+                "dose": 15,
+                "name": "PONIEDZIALEK",
+                "on": true,
+                "time": "2016-03-31T18:30:00.000Z"
+            },
+            {
+                "day_of_week": 1,
+                "dose": 14,
+                "name": "WTOREK",
+                "on": true,
+                "time": "2016-03-31T18:45:00.000Z"
+            },
+            {
+                "day_of_week": 2,
+                "dose": 14.2,
+                "name": "SRODA",
+                "on": true,
+                "time": "2016-03-31T18:45:00.000Z"
+            },
+            {
+                "day_of_week": 3,
+                "dose": 16.8,
+                "name": "CZWARTEK",
+                "on": true,
+                "time": "2016-03-31T18:45:00.000Z"
+            },
+            {
+                "day_of_week": 4,
+                "dose": 15.2,
+                "name": "PIATEK",
+                "on": true,
+                "time": "2016-03-31T18:45:00.000Z"
+            },
+            {
+                "day_of_week": 5,
+                "dose": 8.2,
+                "name": "SOBOTA",
+                "on": true,
+                "time": "2016-03-31T18:45:00.000Z"
+            },
+            {
+                "day_of_week": 6,
+                "dose": 1,
+                "name": "NIEDZIELA",
+                "on": true,
+                "time": "2016-03-31T18:45:00.000Z"
+            }
+        ]
+    },
+    "3": {
+        "alert": true,
+        "alertpercent": 10,
+        "capacity": 500,
+        "dosed": false,
+        "ml_per_sec": 2.2,
+        "name": "FOSFOR",
+        "on": true,
+        "percent": 40,
+        "state": 500,
+        "times": [
+            {
+                "day_of_week": 0,
+                "dose": 15,
+                "name": "PONIEDZIALEK",
+                "on": true,
+                "time": "10:30"
+            },
+            {
+                "day_of_week": 1,
+                "dose": 14,
+                "name": "WTOREK",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 2,
+                "dose": 0.6,
+                "name": "SRODA",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 3,
+                "dose": 16.8,
+                "name": "CZWARTEK",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 4,
+                "dose": 15.2,
+                "name": "PIATEK",
+                "on": false,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 5,
+                "dose": 8.2,
+                "name": "SOBOTA",
+                "on": false,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 6,
+                "dose": 1,
+                "name": "NIEDZIELA",
+                "on": false,
+                "time": "10:45"
+            }
+        ]
+    },
+    "4": {
+        "alert": true,
+        "alertpercent": 10,
+        "capacity": 500,
+        "dosed": false,
+        "ml_per_sec": "2.5",
+        "name": "MAGNEZ",
+        "on": true,
+        "percent": 100,
+        "state": 500,
+        "times": [
+            {
+                "day_of_week": 0,
+                "dose": 15,
+                "name": "PONIEDZIALEK",
+                "on": true,
+                "time": "10:30"
+            },
+            {
+                "day_of_week": 1,
+                "dose": 14,
+                "name": "WTOREK",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 2,
+                "dose": 14.2,
+                "name": "SRODA",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 3,
+                "dose": 16.8,
+                "name": "CZWARTEK",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 4,
+                "dose": 15.2,
+                "name": "PIATEK",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 5,
+                "dose": 8.2,
+                "name": "SOBOTA",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 6,
+                "dose": 1,
+                "name": "NIEDZIELA",
+                "on": true,
+                "time": "10:45"
+            }
+        ]
+    },
+    "5": {
+        "alert": true,
+        "alertpercent": 10,
+        "capacity": 500,
+        "dosed": false,
+        "ml_per_sec": 2.2,
+        "name": "CARBO",
+        "on": true,
+        "percent": 60,
+        "state": 500,
+        "times": [
+            {
+                "day_of_week": 0,
+                "dose": 15,
+                "name": "PONIEDZIALEK",
+                "on": true,
+                "time": "10:30"
+            },
+            {
+                "day_of_week": 1,
+                "dose": 14,
+                "name": "WTOREK",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 2,
+                "dose": 14.2,
+                "name": "SRODA",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 3,
+                "dose": 16.8,
+                "name": "CZWARTEK",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 4,
+                "dose": 15.2,
+                "name": "PIATEK",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 5,
+                "dose": 8.2,
+                "name": "SOBOTA",
+                "on": true,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 6,
+                "dose": 1,
+                "name": "NIEDZIELA",
+                "on": true,
+                "time": "10:45"
+            }
+        ]
+    },
+    "6": {
+        "alert": true,
+        "alertpercent": 10,
+        "capacity": 500,
+        "dosed": false,
+        "ml_per_sec": 2.2,
+        "name": "MIKRO",
+        "on": true,
+        "percent": 70,
+        "state": 500,
+        "times": [
+            {
+                "day_of_week": 0,
+                "dose": 0.6,
+                "name": "PONIEDZIALEK",
+                "on": true,
+                "time": "05:30"
+            },
+            {
+                "day_of_week": 1,
+                "dose": 14,
+                "name": "WTOREK",
+                "on": false,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 2,
+                "dose": 14.2,
+                "name": "SRODA",
+                "on": false,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 3,
+                "dose": 16.8,
+                "name": "CZWARTEK",
+                "on": false,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 4,
+                "dose": 15.2,
+                "name": "PIATEK",
+                "on": false,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 5,
+                "dose": 8.2,
+                "name": "SOBOTA",
+                "on": false,
+                "time": "10:45"
+            },
+            {
+                "day_of_week": 6,
+                "dose": 1,
+                "name": "NIEDZIELA",
+                "on": false,
+                "time": "10:45"
+            }
+        ]
+    }
+}
