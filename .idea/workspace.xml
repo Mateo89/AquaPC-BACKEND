@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="af68afbd-a3ac-4a9a-a3b3-8a0d072f4dcc" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Helpers/Colors.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Helpers/Coordinate.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Helpers/Fonts.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Logic/BottleModThread.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Logic/Classes/Bottle.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Logic/Classes/BottleTimes.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Logic/Classes/__init__.py" afterPath="$PROJECT_DIR$/Helpers/Light2ModHelper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Helpers/BottleModHelper.py" afterPath="$PROJECT_DIR$/Helpers/BottleModHelper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Helpers/PowerModHelper.py" afterPath="$PROJECT_DIR$/Helpers/PowerModHelper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Logic/BottleLogic.py" afterPath="$PROJECT_DIR$/Logic/BottleLogic.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Logic/Light1Logic.py" afterPath="$PROJECT_DIR$/Logic/Light1Logic.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Logic/Light2Logic.py" afterPath="$PROJECT_DIR$/Logic/Light2Logic.py" />
-    </list>
+    <list default="true" id="af68afbd-a3ac-4a9a-a3b3-8a0d072f4dcc" name="Default" comment="" />
     <ignored path="BACKEND.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
