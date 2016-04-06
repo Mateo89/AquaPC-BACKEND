@@ -77,49 +77,49 @@
                 "dose": 15,
                 "name": "PONIEDZIALEK",
                 "on": true,
-                "time": "2016-03-31T18:30:00.000Z"
+                "time": "18:30"
             },
             {
                 "day_of_week": 1,
                 "dose": 14,
                 "name": "WTOREK",
                 "on": true,
-                "time": "2016-03-31T18:45:00.000Z"
+                "time": "18:45"
             },
             {
                 "day_of_week": 2,
                 "dose": 14.2,
                 "name": "SRODA",
                 "on": true,
-                "time": "2016-03-31T18:45:00.000Z"
+                "time": "18:45"
             },
             {
                 "day_of_week": 3,
                 "dose": 16.8,
                 "name": "CZWARTEK",
                 "on": true,
-                "time": "2016-03-31T18:45:00.000Z"
+                "time": "18:45"
             },
             {
                 "day_of_week": 4,
                 "dose": 15.2,
                 "name": "PIATEK",
                 "on": true,
-                "time": "2016-03-31T18:45:00.000Z"
+                "time": "18:45"
             },
             {
                 "day_of_week": 5,
                 "dose": 8.2,
                 "name": "SOBOTA",
                 "on": true,
-                "time": "2016-03-31T18:45:00.000Z"
+                "time": "18:45"
             },
             {
                 "day_of_week": 6,
                 "dose": 1,
                 "name": "NIEDZIELA",
                 "on": true,
-                "time": "2016-03-31T18:45:00.000Z"
+                "time": "18:45"
             }
         ]
     },

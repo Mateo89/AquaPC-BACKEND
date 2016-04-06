@@ -40,7 +40,6 @@ def water_temp_logic():
                 PowerModHelper.unset_switch(Register.I2C_POWERMOD_HEATER)
 
 
-
 def turn_off_heaters():
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_HEATER_LED)]['on']:
         PowerModHelper.unset_switch(Register.I2C_POWERMOD_HEATER)

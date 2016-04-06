@@ -2,7 +2,7 @@ import threading
 
 from register import Register
 from Helpers import PowerModHelper, TimesHelper, Light1ModHelper
-from datetime import time
+import time
 
 
 def light1_logic():
@@ -47,7 +47,6 @@ class Light1Thread(threading.Thread):
         if percent > Register.LIGHT1_PERCENT:
             percent -= 1
             Light1ModHelper.update_data(percent)
-
         if percent == 0:
             turn_off()
         else:

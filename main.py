@@ -7,9 +7,9 @@ import settings
 from register import Register
 
 #import Display
-#import Logic
-#from Logic import BottleModThread
-#from Logic import ReminderThread
+import Logic
+from Logic import BottleLogic
+from Logic import ReminderThread
 import RestThread
 import time
 
@@ -19,9 +19,9 @@ def main():
 
     threads = []
     #threads.append(WatchdogThread.WatchdogThread())
-    #threads.append(Logic.Logic())
+    threads.append(Logic.Logic())
     #threads.append(Display.Display())
-    #threads.append(BottleModThread.BottleModThread())
+    threads.append(BottleLogic.BottleModThread())
     #threads.append(ReminderThread.ReminderThread())
     threads.append(threading.Thread(target=RestThread.run_server))
 
@@ -48,8 +48,6 @@ def main():
     Helpers.log("ZAPISYWANIE KONFIGURACJI")
     settings.save_settings()
     Helpers.log("ZAMYKANIE APLIKACJI")
-
-    process = Popen(["/sbin/reboot"], stdout=PIPE)
 
 if __name__ == "__main__":
     main()

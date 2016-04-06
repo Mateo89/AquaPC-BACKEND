@@ -1,5 +1,6 @@
 import threading
-from datetime import time, datetime
+import time
+from datetime import datetime
 import Helpers
 import settings
 from Helpers import BottleModHelper, TimesHelper
@@ -49,7 +50,7 @@ class BottleModThread(threading.Thread):
                         if not Register.BOTTLE_SETTINGS[bottle]['dosed']:
                             dose_from_bottle(bottle)
                     else:
-                        bottle['dosed'] = False
+                        Register.BOTTLE_SETTINGS[bottle]['dosed'] = False
 
             # obsluga manualnego dozowania
             if Register.BOTTLE_MANUAL_BOTTLE:
@@ -57,46 +58,45 @@ class BottleModThread(threading.Thread):
 
             time.sleep(5)
 
+    def dose_from_bottle(bottle, manual=False):
+        dose = 0
+        day_of_week = datetime.datetime.now().weekday()
 
-def dose_from_bottle(bottle, manual=False):
-    dose = 0
-    day_of_week = datetime.datetime.now().weekday()
-
-    if manual:
-        dose = Register.BOTTLE_MANUAL_DOSE
-    else:
-        dose = Register.BOTTLE_SETTINGS[bottle]['times'][day_of_week]['dose']
-
-    if dose == 0:
-        Helpers.log("Pomijanie pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] + " z powodu zerowej dawki")
-        return
-
-    time_dose = dose * bottle['times']['ml_per_sec']
-    Helpers.log("Podawanie dawki z pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] +
-                " przez czas: " + str(time_dose))
-
-    #if manual:
-    #    Register.BOTTLE_MANUAL_REMAINING_DOSE = dose
-
-    number = int(bottle) - 1
-    BottleModHelper.set_switch(number)
-    for x in range(dose):
-        time.sleep(Register.BOTTLE_SETTINGS[bottle]['ml_per_sec'])
         if manual:
-            Register.BOTTLE_MANUAL_DOSE -= 1
-    BottleModHelper.unset_switch(number)
-    Helpers.log("Koniec dozowania z pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'])
-    Register.BOTTLE_SETTINGS[bottle]['dosed'] = True
+            dose = Register.BOTTLE_MANUAL_DOSE
+        else:
+            dose = Register.BOTTLE_SETTINGS[bottle]['times'][day_of_week]['dose']
 
-    # zmiana stanu pojemnika i obliczenie aktualnego procentu
+        if dose == 0:
+            Helpers.log("Pomijanie pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] + " z powodu zerowej dawki")
+            return
 
-    state = Register.BOTTLE_SETTINGS[bottle]['state'] - dose
-    capacity = Register.BOTTLE_SETTINGS[bottle]['capacity']
+        time_dose = dose * bottle['times']['ml_per_sec']
+        Helpers.log("Podawanie dawki z pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] +
+                    " przez czas: " + str(time_dose))
 
-    Register.BOTTLE_SETTINGS[bottle]['state'] = state
-    Register.BOTTLE_SETTINGS[bottle]['percent'] = int((float(state) / capacity) * 100)
+        #if manual:
+        #    Register.BOTTLE_MANUAL_REMAINING_DOSE = dose
 
-    if manual:
-        Register.BOTTLE_MANUAL_BOTTLE = None
+        number = int(bottle) - 1
+        BottleModHelper.set_switch(number)
+        for x in range(dose):
+            time.sleep(Register.BOTTLE_SETTINGS[bottle]['ml_per_sec'])
+            if manual:
+                Register.BOTTLE_MANUAL_DOSE -= 1
+        BottleModHelper.unset_switch(number)
+        Helpers.log("Koniec dozowania z pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'])
+        Register.BOTTLE_SETTINGS[bottle]['dosed'] = True
 
-    settings.save_bottle()
+        # zmiana stanu pojemnika i obliczenie aktualnego procentu
+
+        state = Register.BOTTLE_SETTINGS[bottle]['state'] - dose
+        capacity = Register.BOTTLE_SETTINGS[bottle]['capacity']
+
+        Register.BOTTLE_SETTINGS[bottle]['state'] = state
+        Register.BOTTLE_SETTINGS[bottle]['percent'] = int((float(state) / capacity) * 100)
+
+        if manual:
+            Register.BOTTLE_MANUAL_BOTTLE = None
+
+        settings.save_bottle()

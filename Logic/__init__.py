@@ -1,8 +1,8 @@
 __author__ = 'mateu'
 
 from TempThread import TempThread
-from LircThread import LircThread
-import lirc
+#from LircThread import LircThread
+#import lirc
 import threading
 import time
 import Helpers
@@ -27,7 +27,9 @@ class Logic(threading.Thread):
     i2c_bus = None
 
     tempThread = None
-    lircThread = None
+   #lircThread = None
+    light1Thread = None
+    light2Thread = None
 
     def __init__(self):
         threading.Thread.__init__(self)
@@ -35,8 +37,15 @@ class Logic(threading.Thread):
         self.tempThread.start()
 
         time.sleep(0.5)
-        self.lircThread = LircThread()
-        self.lircThread.start()
+        #self.lircThread = LircThread()
+        #self.lircThread.start()
+
+        self.light1Thread = Light1Logic.Light1Thread()
+        self.light1Thread.start()
+
+        self.light2Thread = Light2Logic.Light2Thread()
+        self.light2Thread.start()
+
         PowerModHelper.update_data()
 
     def run(self):

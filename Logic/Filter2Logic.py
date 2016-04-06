@@ -4,15 +4,14 @@ from register import Register
 
 def filter2_logic():
 
-    if Register.I2C_POWERMOD_FILTER2_OVERDRIVE:
+    if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_FILTER2)]['override']:
         return
 
     if Register.CHANGE_WATER_MODE:
-        if Register.I2C_POWERMOD_FILTER2_FLAG:
-            PowerModHelper.unset_switch(Register.I2C_POWERMOD_FILTER2)
+        PowerModHelper.unset_switch(Register.I2C_POWERMOD_FILTER2)
     else:
-        if not Register.I2C_POWERMOD_FILTER2_FLAG:
-            PowerModHelper.set_switch(Register.I2C_POWERMOD_FILTER2)
+        PowerModHelper.set_switch(Register.I2C_POWERMOD_FILTER2)
+
 
 def block_filter():
     Register.I2C_POWERMOD_FILTER2_OVERDRIVE = True

@@ -2,10 +2,10 @@ import threading
 
 from register import Register
 from Helpers import PowerModHelper, TimesHelper, Light2ModHelper
-from datetime import time
+import time
 
 
-def light1_logic():
+def light2_logic():
 
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override']:
         return

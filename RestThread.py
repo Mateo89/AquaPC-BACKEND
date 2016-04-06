@@ -80,26 +80,26 @@ def state_log_delete():
     return jsonify({'data': None})
 
 
-@app.route('/api/settings/lamp/<int:id>/times', methods=['GET'])
-def settings_lamptimes_get(id):
-    iter = Register.LAMPS_SETTINGS[str(id)]['times']
+@app.route('/api/settings/lamp/<int:index>/times', methods=['GET'])
+def settings_lamptimes_get(index):
+    iter = Register.LAMPS_SETTINGS[str(index)]['times']
     return jsonify({'data': sorted(iter, key=lambda x: x['day_of_week'])})
 
 
-@app.route('/api/settings/lamp/<int:id>/times', methods=['PUT'])
-def settings_lamptimes_put(id):
-    ids = str(id)
+@app.route('/api/settings/lamp/<int:index>/times', methods=['PUT'])
+def settings_lamptimes_put(index):
+    ids = str(index)
 
     Register.LAMPS_SETTINGS[ids]['times'] = request.json
     print Register.LAMPS_SETTINGS[ids]
     settings.save_settings()
-    return settings_lamptimes_get(id)
+    return settings_lamptimes_get(index)
 
 
-@app.route('/api/settings/lamp/<int:id>/state', methods=['GET'])
-def settings_lampstate_get(id):
+@app.route('/api/settings/lamp/<int:index>/state', methods=['GET'])
+def settings_lampstate_get(index):
 
-    ids = str(id)
+    ids = str(index)
 
     data = {
         'on': Register.LAMPS_SETTINGS[ids]['on'],
@@ -110,15 +110,15 @@ def settings_lampstate_get(id):
     return jsonify({'data': data})
 
 
-@app.route('/api/settings/lamp/<int:id>/state', methods=['PUT'])
-def settings_lampstate_put(id):
-    ids = str(id)
+@app.route('/api/settings/lamp/<int:index>/state', methods=['PUT'])
+def settings_lampstate_put(index):
+    ids = str(index)
     Register.LAMPS_SETTINGS[ids]['use_heater_on'] = request.json['use_heater_on']
     Register.LAMPS_SETTINGS[ids]['on'] = request.json['on']
     Register.LAMPS_SETTINGS[ids]['use_heater_delta'] = request.json['use_heater_delta']
     Register.LAMPS_SETTINGS[ids]['water_change_on'] = request.json['water_change_on']
     settings.save_settings()
-    return settings_lampstate_get(id)
+    return settings_lampstate_get(index)
 
 
 @app.route('/api/settings/water', methods=['GET'])
@@ -154,24 +154,24 @@ def settings_heater_put():
     return settings_heater_get()
 
 
-@app.route('/api/settings/pomp/<int:id>/times', methods=['GET'])
-def settings_pomp_times_get(id):
-    data = Register.BOTTLE_SETTINGS[str(id)]['times']
+@app.route('/api/settings/pomp/<int:index>/times', methods=['GET'])
+def settings_pomp_times_get(index):
+    data = Register.BOTTLE_SETTINGS[str(index)]['times']
     return jsonify({'data': sorted(data, key=lambda x: x['day_of_week'])})
 
 
-@app.route('/api/settings/pomp/<int:id>/times', methods=['PUT'])
-def settings_pomp_times_put(id):
+@app.route('/api/settings/pomp/<int:index>/times', methods=['PUT'])
+def settings_pomp_times_put(index):
 
-    Register.BOTTLE_SETTINGS[str(id)]['times'] = request.json
+    Register.BOTTLE_SETTINGS[str(index)]['times'] = request.json
     settings.save_bottle()
-    return settings_pomp_times_get(id)
+    return settings_pomp_times_get(index)
 
 
-@app.route('/api/settings/pomp/<int:id>/state', methods=['GET'])
-def settings_pomp_state_get(id):
+@app.route('/api/settings/pomp/<int:index>/state', methods=['GET'])
+def settings_pomp_state_get(index):
 
-    ids = str(id)
+    ids = str(index)
     data = {
         'name': Register.BOTTLE_SETTINGS[ids]['name'],
         'on': Register.BOTTLE_SETTINGS[ids]['on'],
@@ -183,9 +183,9 @@ def settings_pomp_state_get(id):
     return jsonify({'data': data})
 
 
-@app.route('/api/settings/pomp/<int:id>/state', methods=['PUT'])
-def settings_pomp_state_put(id):
-    ids = str(id)
+@app.route('/api/settings/pomp/<int:index>/state', methods=['PUT'])
+def settings_pomp_state_put(index):
+    ids = str(index)
 
     Register.BOTTLE_SETTINGS[ids]['name'] = request.json['name']
     Register.BOTTLE_SETTINGS[ids]['on'] = request.json['on']
@@ -193,25 +193,25 @@ def settings_pomp_state_put(id):
     Register.BOTTLE_SETTINGS[ids]['capacity'] = request.json['capacity']
 
     settings.save_bottle()
-    return settings_pomp_state_get(id)
+    return settings_pomp_state_get(index)
 
 
-@app.route('/api/settings/pomp/<int:id>/dose', methods=['GET'])
-def settings_pomp_dose_get(id):
+@app.route('/api/settings/pomp/<int:index>/dose', methods=['GET'])
+def settings_pomp_dose_get(index):
     return jsonify({'dose': Register.BOTTLE_MANUAL_DOSE})
 
 
-@app.route('/api/settings/filter/<int:id>/state', methods=['GET'])
-def settings_filter_state(id):
-    data = Register.FILTER_SETTINGS[str(id)]
+@app.route('/api/settings/filter/<int:index>/state', methods=['GET'])
+def settings_filter_state(index):
+    data = Register.FILTER_SETTINGS[str(index)]
     return jsonify({'data': data})
 
 
-@app.route('/api/settings/filter/<int:id>/state', methods=['PUT'])
-def settings_filter_state_put(id):
-    Register.FILTER_SETTINGS[str(id)] = request.json
+@app.route('/api/settings/filter/<int:index>/state', methods=['PUT'])
+def settings_filter_state_put(index):
+    Register.FILTER_SETTINGS[str(index)] = request.json
     settings.save_filter()
-    return settings_filter_state(id)
+    return settings_filter_state(index)
 
 
 @app.route('/api/settings/co2/times', methods=['GET'])
@@ -252,7 +252,7 @@ def settings_co2_state_put():
 def settings_o2_times_get():
 
     data = Register.O2_SETTINGS['times']
-    return jsonify({'data': sorted(data, key=lambda x: x['day_of_week']) })
+    return jsonify({'data': sorted(data, key=lambda x: x['day_of_week'])})
 
 
 @app.route('/api/settings/o2/times', methods=['PUT'])
@@ -280,21 +280,18 @@ def settings_o2_state_put():
     return settings_o2_state_get()
 
 
-
 ########################################################
 ##
 ##              ACTIONS
 ##
 ########################################################
-
-
 # wl/wyl przelacznika
-@app.route('/api/actions/switches/<int:id>', methods=['PUT'])
-def state_switches_put(id):
+@app.route('/api/actions/switches/<int:index>', methods=['PUT'])
+def state_switches_put(index):
 
-    ids = str(id)
-    PowerModHelper.toggle_switch(ids)
-    PowerModHelper.override_switch(id)
+    #ids = str(index)
+    PowerModHelper.toggle_switch(index)
+    PowerModHelper.override_switch(index)
     return state_switches_get()
 
 
@@ -304,24 +301,24 @@ def state_switches_delete():
 
     if request.json is None:
         for switch in Register.POWERMOD_DATA.viewkeys():
-            PowerModHelper.remove_override_switch(id)
+            PowerModHelper.remove_override_switch(switch)
     else:
-        PowerModHelper.remove_override_switch(id)
+        PowerModHelper.remove_override_switch(request.json)
 
     return state_switches_get()
 
 
-@app.route('/api/actions/pomp/<int:id>/refill',methods=['PUT'])
-def actions_pomp_refill_put(id):
-    BottleLogic.refill_bottle(id)
-    return settings_pomp_state_get(id)
+@app.route('/api/actions/pomp/<int:index>/refill', methods=['PUT'])
+def actions_pomp_refill_put(index):
+    BottleLogic.refill_bottle(index)
+    return settings_pomp_state_get(index)
 
 
-@app.route('/api/actions/pomp/<int:id>/dose',methods=['PUT'])
-def actions_pomp_dose_put(id):
-    BottleLogic.dose_from_bottle(str(id),request.json)
-    return settings_pomp_dose_get(id)
+@app.route('/api/actions/pomp/<int:index>/dose', methods=['PUT'])
+def actions_pomp_dose_put(index):
+    BottleLogic.dose_from_bottle(str(index), request.json)
+    return settings_pomp_dose_get(index)
 
 
 def run_server():
-    app.run(debug=True,use_reloader=False)
+    app.run(debug=True, use_reloader=False)

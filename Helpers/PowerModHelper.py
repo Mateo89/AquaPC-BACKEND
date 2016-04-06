@@ -28,11 +28,12 @@ def unset_switch(switch):
     update_data()
     update_flag(switch, False)
 
+
 def toggle_switch(switch):
     Register.I2C_POWERMOD_DATA ^= (1 << switch)
     flag = (Register.I2C_POWERMOD_DATA & (1 << switch)) >> switch
     update_data()
-    update_flag(switch, flag)
+    update_flag(switch, bool(flag))
 
 
 def update_flag(switch, value):

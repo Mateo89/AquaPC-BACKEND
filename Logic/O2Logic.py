@@ -35,12 +35,11 @@ def unblock_o2():
 
 
 def turn_on():
-    if not Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_O2)]['on']:
-        PowerModHelper.set_switch(Register.I2C_POWERMOD_O2)
+    PowerModHelper.set_switch(Register.I2C_POWERMOD_O2)
+
 
 def turn_off():
-    if not Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_O2)]['on']:
-        PowerModHelper.set_switch(Register.I2C_POWERMOD_O2)
+    PowerModHelper.unset_switch(Register.I2C_POWERMOD_O2)
 
 
 def toggle_o2():

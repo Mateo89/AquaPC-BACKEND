@@ -21,10 +21,12 @@ anti_log = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x
 
 
 def reset():
-    i2c_bus = SMBus(1)
-    i2c_bus.write_byte_data(Register.LIGHT2_ADDRESS, 0xff, 0x00)
+    #i2c_bus = SMBus(1)
+    #i2c_bus.write_byte_data(Register.LIGHT2_ADDRESS, 0xff, 0x00)
+    pass
 
 
 def update_data(percent):
-    i2c_bus = SMBus(1)
-    i2c_bus.write_byte_data(Register.LIGHT2_ADDRESS, 0xff, anti_log[percent])
+    #i2c_bus = SMBus(1)
+    #i2c_bus.write_byte_data(Register.LIGHT2_ADDRESS, 0xff, anti_log[percent])
+    pass
