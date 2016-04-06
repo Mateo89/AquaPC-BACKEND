@@ -4,12 +4,12 @@ from smbus import SMBus
 
 def reset():
     i2c_bus = SMBus(1)
-    i2c_bus.write_byte_data(Register.BOTTLE_ADDRESS, 0xff , 0x00)
+    i2c_bus.write_byte_data(Register.BOTTLE_ADDRESS, 0xff, 0x00)
 
 
 def update_data():
     i2c_bus = SMBus(1)
-    i2c_bus.write_byte_data(Register.BOTTLE_ADDRESS, 0xff , Register.BOTTLE_DATA)
+    i2c_bus.write_byte_data(Register.BOTTLE_ADDRESS, 0xff, Register.BOTTLE_DATA)
 
 
 def set_switch(switch):

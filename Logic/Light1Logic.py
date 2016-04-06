@@ -40,23 +40,29 @@ class Light1Thread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
 
+    def process_percent(self, percent):
+        if percent < Register.LIGHT1_PERCENT:
+            percent += 1
+            Light1ModHelper.update_data(percent)
+        if percent > Register.LIGHT1_PERCENT:
+            percent -= 1
+            Light1ModHelper.update_data(percent)
+
+        if percent == 0:
+            turn_off()
+        else:
+            turn_on()
+
+    def process_heater(self):
+        pass
+
     def run(self):
 
         percent = 0
 
         while not Register.EXIT_FLAG:
 
-            if percent < Register.LIGHT1_PERCENT:
-                percent += 1
-                Light1ModHelper.update_data(percent)
-            if percent > Register.LIGHT1_PERCENT:
-                percent -= 1
-                Light1ModHelper.update_data(percent)
-
-            if percent == 0:
-                turn_off()
-            else:
-                turn_on()
+            self.process_percent(percent)
 
             time.sleep(1)
 

@@ -5,12 +5,12 @@ import Helpers
 
 def reset():
     i2c_bus = SMBus(1)
-    i2c_bus.write_byte_data(Register.I2C_POWERMOD_ADRESS,0xff, 0x00)
+    i2c_bus.write_byte_data(Register.I2C_POWERMOD_ADRESS, 0xff, 0x00)
 
 
 def update_data():
     i2c_bus = SMBus(1)
-    i2c_bus.write_byte_data(Register.I2C_POWERMOD_ADRESS,0xff, Register.I2C_POWERMOD_DATA)
+    i2c_bus.write_byte_data(Register.I2C_POWERMOD_ADRESS, 0xff, Register.I2C_POWERMOD_DATA)
 
 
 def set_switch(switch):
