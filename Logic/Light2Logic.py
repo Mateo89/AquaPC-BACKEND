@@ -35,23 +35,26 @@ def turn_off():
 
 
 # kontrolowanie poziomu swiatla
+def process_percent(percent):
+    if percent < Register.LIGHT2_PERCENT:
+        percent += 1
+        Light2ModHelper.update_data(percent)
+    if percent > Register.LIGHT2_PERCENT:
+        percent -= 1
+        Light2ModHelper.update_data(percent)
+
+    if percent == 0:
+        turn_off()
+    else:
+        turn_on()
+
+    return percent
+
+
 class Light2Thread(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
-
-    def process_percent(self, percent):
-        if percent < Register.LIGHT2_PERCENT:
-            percent += 1
-            Light2ModHelper.update_data(percent)
-        if percent > Register.LIGHT2_PERCENT:
-            percent -= 1
-            Light2ModHelper.update_data(percent)
-
-        if percent == 0:
-            turn_off()
-        else:
-            turn_on()
 
     def process_heater(self):
         pass
@@ -62,7 +65,7 @@ class Light2Thread(threading.Thread):
 
         while not Register.EXIT_FLAG:
 
-            self.process_percent(percent)
+            percent = process_percent(percent)
 
             time.sleep(1)
 
