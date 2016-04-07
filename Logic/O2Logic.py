@@ -6,8 +6,12 @@ def o2_logic():
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_O2)]['override']:
         return
 
+    if not Register.O2_SETTINGS['on']:
+        turn_off()
+        return
+
     if Register.CHANGE_WATER_MODE:
-        if Register.CO2_SETTINGS['water_change_off']:
+        if Register.O2_SETTINGS['water_change_off']:
             turn_off()
             return
 

@@ -21,7 +21,6 @@ def main():
     #threads.append(WatchdogThread.WatchdogThread())
     threads.append(Logic.Logic())
     #threads.append(Display.Display())
-    threads.append(BottleLogic.BottleModThread())
     #threads.append(ReminderThread.ReminderThread())
     threads.append(threading.Thread(target=RestThread.run_server))
 

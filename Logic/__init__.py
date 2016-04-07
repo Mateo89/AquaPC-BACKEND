@@ -10,6 +10,7 @@ from datetime import datetime
 from register import Register
 from Helpers import PowerModHelper
 
+
 from Logic import Light1Logic
 from Logic import Light2Logic
 from Logic import WaterTempLogic
@@ -18,6 +19,7 @@ from Logic import O2Logic
 from Logic import Filter1Logic
 from Logic import Filter2Logic
 from Logic import LightModeLogic
+from Logic import BottleLogic
 
 import math
 
@@ -26,37 +28,36 @@ class Logic(threading.Thread):
 
     i2c_bus = None
 
-    tempThread = None
-   #lircThread = None
-    light1Thread = None
-    light2Thread = None
+    threads = []
 
     def __init__(self):
         threading.Thread.__init__(self)
-        self.tempThread = TempThread()
-        self.tempThread.start()
 
-        time.sleep(0.5)
-        #self.lircThread = LircThread()
-        #self.lircThread.start()
+        self.threads.append(TempThread())
+        #self.threads.append(LircThread())
 
-        self.light1Thread = Light1Logic.Light1Thread()
-        self.light1Thread.start()
-
-        self.light2Thread = Light2Logic.Light2Thread()
-        self.light2Thread.start()
+        self.threads.append(Light1Logic.Light1Thread())
+        self.threads.append(Light2Logic.Light2Thread())
+        self.threads.append(BottleLogic.BottleThread())
 
         PowerModHelper.update_data()
 
     def run(self):
 
+        for th in self.threads:
+            th.start()
+            time.sleep(0.5)
+
         while True:
             if Register.EXIT_FLAG:
-                if not self.tempThread.isAlive():
-                    if not self.lircThread.isAlive():
-                        PowerModHelper.reset()
-                        break
-                continue
+                temp_threads = []
+
+                for t in self.threads:
+                    if t is not None and t.isAlive():
+                        t.join(0.1)
+                        temp_threads.append(t)
+
+                threads = temp_threads
 
             # glowna czesc
 

@@ -30,7 +30,7 @@ def load_settings():
     with open('filter.settings', 'r') as data_file:
         Register.FILTER_SETTINGS = json.load(data_file)
 
-    #Helpers.log("Wczytano ustawienia")
+    Helpers.log("Wczytano ustawienia")
 
 
 def save_settings():
@@ -43,8 +43,6 @@ def save_settings():
     save_o2()
     save_filter()
 
-    #Helpers.log("Zapisano ustawienia")
-
 
 def save_water():
     with open('water.settings', 'w') as data_file:
@@ -52,6 +50,7 @@ def save_water():
                                   separators=(',', ': '))
         data_file.write(configString)
         data_file.close()
+        Helpers.log("Zapisano ustawienia Wody")
 
 
 def save_lamp():
@@ -60,6 +59,7 @@ def save_lamp():
                                   separators=(',', ': '))
         data_file.write(configString)
         data_file.close()
+        Helpers.log("Zapisano ustawienia Lamp")
 
 
 def save_bottle():
@@ -67,6 +67,7 @@ def save_bottle():
         configString = json.dumps(Register.BOTTLE_SETTINGS, default=lambda o: o.__dict__, sort_keys=True,indent=4, separators=(',', ': '))
         data_file.write(configString)
         data_file.close()
+        Helpers.log("Zapisano ustawienia Dozownika")
 
 
 def save_heater():
@@ -74,6 +75,7 @@ def save_heater():
         configString = json.dumps(Register.HEATER_SETTINGS, default=lambda o: o.__dict__, sort_keys=True,indent=4, separators=(',', ': '))
         data_file.write(configString)
         data_file.close()
+        Helpers.log("Zapisano ustawienia Grzalki")
 
 
 def save_co2():
@@ -82,6 +84,7 @@ def save_co2():
                                   separators=(',', ': '))
         data_file.write(configString)
         data_file.close()
+        Helpers.log("Zapisano ustawienia CO2")
 
 
 def save_o2():
@@ -90,6 +93,8 @@ def save_o2():
                                   separators=(',', ': '))
         data_file.write(configString)
         data_file.close()
+        Helpers.log("Zapisano ustawienia O2")
+
 
 def save_filter():
     with open('filter.settings', 'w') as data_file:
@@ -97,3 +102,4 @@ def save_filter():
                                   separators=(',', ': '))
         data_file.write(configString)
         data_file.close()
+        Helpers.log("Zapisano ustawienia Filtrow")

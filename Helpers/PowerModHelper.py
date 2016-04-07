@@ -42,8 +42,12 @@ def update_flag(switch, value):
 
 
 def override_switch(switch):
-    Register.POWERMOD_DATA[str(switch)]['override'] = True
+    if not Register.POWERMOD_DATA[str(switch)]['override']:
+        Register.POWERMOD_DATA[str(switch)]['override'] = True
+        Helpers.log("Zalozenie locka na: " + Register.POWERMOD_DATA[str(switch)]['name'])
 
 
 def remove_override_switch(switch):
-    Register.POWERMOD_DATA[str(switch)]['override'] = False
+    if Register.POWERMOD_DATA[str(switch)]['override']:
+        Register.POWERMOD_DATA[str(switch)]['override'] = False
+        Helpers.log("Zdjecie locka z: " + Register.POWERMOD_DATA[str(switch)]['name'])

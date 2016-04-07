@@ -92,7 +92,7 @@ def settings_lamptimes_put(index):
 
     Register.LAMPS_SETTINGS[ids]['times'] = request.json
     print Register.LAMPS_SETTINGS[ids]
-    settings.save_settings()
+    settings.save_lamp()
     return settings_lamptimes_get(index)
 
 
@@ -117,7 +117,7 @@ def settings_lampstate_put(index):
     Register.LAMPS_SETTINGS[ids]['on'] = request.json['on']
     Register.LAMPS_SETTINGS[ids]['use_heater_delta'] = request.json['use_heater_delta']
     Register.LAMPS_SETTINGS[ids]['water_change_on'] = request.json['water_change_on']
-    settings.save_settings()
+    settings.save_lamp()
     return settings_lampstate_get(index)
 
 
@@ -189,8 +189,8 @@ def settings_pomp_state_put(index):
 
     Register.BOTTLE_SETTINGS[ids]['name'] = request.json['name']
     Register.BOTTLE_SETTINGS[ids]['on'] = request.json['on']
-    Register.BOTTLE_SETTINGS[ids]['ml_per_sec'] = request.json['ml_per_sec']
-    Register.BOTTLE_SETTINGS[ids]['capacity'] = request.json['capacity']
+    Register.BOTTLE_SETTINGS[ids]['ml_per_sec'] = float(request.json['ml_per_sec'])
+    Register.BOTTLE_SETTINGS[ids]['capacity'] = int(request.json['capacity'])
 
     settings.save_bottle()
     return settings_pomp_state_get(index)

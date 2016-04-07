@@ -1,6 +1,6 @@
 import threading
 import time
-from datetime import datetime
+import datetime
 import Helpers
 import settings
 from Helpers import BottleModHelper, TimesHelper
@@ -28,14 +28,14 @@ def set_bottle(bottle):
 
 
 def refill_bottle(bottle):
-
     ids = str(bottle)
     Register.BOTTLE_SETTINGS[ids]['state'] = Register.BOTTLE_SETTINGS[ids]['capacity']
     Register.BOTTLE_SETTINGS[ids]['percent'] = 100
+    Register.BOTTLE_SETTINGS[ids]['alert'] = False
     settings.save_bottle()
 
 
-class BottleModThread(threading.Thread):
+class BottleThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
 
@@ -48,17 +48,17 @@ class BottleModThread(threading.Thread):
 
                     if TimesHelper.process_times_point(Register.BOTTLE_SETTINGS[bottle]['times']):
                         if not Register.BOTTLE_SETTINGS[bottle]['dosed']:
-                            dose_from_bottle(bottle)
+                            self.dose_from_bottle(bottle)
                     else:
                         Register.BOTTLE_SETTINGS[bottle]['dosed'] = False
 
             # obsluga manualnego dozowania
             if Register.BOTTLE_MANUAL_BOTTLE:
-                dose_from_bottle(Register.BOTTLE_MANUAL_BOTTLE, True)
+                self.dose_from_bottle(Register.BOTTLE_MANUAL_BOTTLE, True)
 
             time.sleep(5)
 
-    def dose_from_bottle(bottle, manual=False):
+    def dose_from_bottle(self, bottle, manual=False):
         dose = 0
         day_of_week = datetime.datetime.now().weekday()
 
@@ -71,8 +71,8 @@ class BottleModThread(threading.Thread):
             Helpers.log("Pomijanie pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] + " z powodu zerowej dawki")
             return
 
-        time_dose = dose * bottle['times']['ml_per_sec']
-        Helpers.log("Podawanie dawki z pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] +
+        time_dose = dose * Register.BOTTLE_SETTINGS[bottle]['ml_per_sec']
+        Helpers.log("Podawanie dawki " + str(dose) + "ml z pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] +
                     " przez czas: " + str(time_dose))
 
         #if manual:
@@ -95,6 +95,11 @@ class BottleModThread(threading.Thread):
 
         Register.BOTTLE_SETTINGS[bottle]['state'] = state
         Register.BOTTLE_SETTINGS[bottle]['percent'] = int((float(state) / capacity) * 100)
+
+        if Register.BOTTLE_SETTINGS[bottle]['percent'] <= Register.BOTTLE_SETTINGS[bottle]['alertpercent']:
+            Register.BOTTLE_SETTINGS[bottle]['alert'] = True
+        else:
+            Register.BOTTLE_SETTINGS[bottle]['alert'] = False
 
         if manual:
             Register.BOTTLE_MANUAL_BOTTLE = None

@@ -1,10 +1,14 @@
+import Helpers
 from Helpers import PowerModHelper, TimesHelper
 from register import Register
 
 
 def co2_logic():
-
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['override']:
+        return
+
+    if not Register.CO2_SETTINGS['on']:
+        turn_off()
         return
 
     if Register.CHANGE_WATER_MODE:
@@ -17,19 +21,19 @@ def co2_logic():
             turn_off()
             return
 
-    #sprawdzenie czy dzialac ma 24h
+    # sprawdzenie czy dzialac ma 24h
     if Register.CO2_SETTINGS['full_day']:
         turn_on()
         return
 
     # jezeli nie dziala 24 no to musimy sprawdzic dzien i godzine
-
     flag = TimesHelper.process_times_between(Register.CO2_SETTINGS['times'])
 
     if flag:
         turn_on()
     else:
         turn_off()
+
 
 def block_co2():
     Register.I2C_POWERMOD_CO2_OVERDRIVE = True
@@ -38,13 +42,13 @@ def block_co2():
 def unblock_co2():
     Register.I2C_POWERMOD_CO2_OVERDRIVE = False
 
+
 def turn_on():
-    if not Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['on']:
-        PowerModHelper.set_switch(Register.I2C_POWERMOD_CO2)
+    PowerModHelper.set_switch(Register.I2C_POWERMOD_CO2)
+
 
 def turn_off():
-    if not Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['on']:
-        PowerModHelper.set_switch(Register.I2C_POWERMOD_CO2)
+    PowerModHelper.unset_switch(Register.I2C_POWERMOD_CO2)
 
 
 def toggle_co2():

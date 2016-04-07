@@ -10,8 +10,12 @@ def light2_logic():
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override']:
         return
 
+    if not Register.LAMPS_SETTINGS['2']['on']:
+        set_percent(0)
+        return
+
     if Register.CHANGE_WATER_MODE:
-        if Register.LAMPS_SETTINGS['1']['water_change_on']:
+        if Register.LAMPS_SETTINGS['2']['water_change_on']:
             set_percent(Register.LAMPS_SETTINGS['2']['water_change_percent'])
     else:
         percent = TimesHelper.process_times_states(Register.LAMPS_SETTINGS['2']['times'])
@@ -19,7 +23,7 @@ def light2_logic():
 
 
 def set_percent(percent):
-    Register.LIGHT1_PERCENT = percent
+    Register.LIGHT2_PERCENT = percent
 
 
 def toggle_light():
@@ -36,10 +40,14 @@ def turn_off():
 
 # kontrolowanie poziomu swiatla
 def process_percent(percent):
-    if percent < Register.LIGHT2_PERCENT:
+
+    lamp_percent = Register.LIGHT2_PERCENT
+
+    if percent < lamp_percent:
         percent += 1
         Light2ModHelper.update_data(percent)
-    if percent > Register.LIGHT2_PERCENT:
+
+    if percent > lamp_percent:
         percent -= 1
         Light2ModHelper.update_data(percent)
 
@@ -53,6 +61,8 @@ def process_percent(percent):
 
 class Light2Thread(threading.Thread):
 
+    percent = 0
+
     def __init__(self):
         threading.Thread.__init__(self)
 
@@ -61,11 +71,7 @@ class Light2Thread(threading.Thread):
 
     def run(self):
 
-        percent = 0
-
         while not Register.EXIT_FLAG:
-
-            percent = process_percent(percent)
-
+            self.percent = process_percent(self.percent)
             time.sleep(1)
 

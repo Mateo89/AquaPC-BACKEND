@@ -41,7 +41,7 @@ class Register:
 
 
     POWERMOD_DATA = {
-        str(I2C_POWERMOD_LIGHT1): {"name": "Lampa 1", "on": False, "override": False, 'img': 'img/fan-128.png' ,"warning": False, "fanon": True, "fanoverride": False},
+        str(I2C_POWERMOD_LIGHT1): {"name": "Lampa 1", "on": False, "override": False, 'img': 'img/fan-128.png', "warning": False, "fanon": True, "fanoverride": False},
         str(I2C_POWERMOD_LIGHT2): {"name": "Lampa 2", "on": False, "override": False, 'img': 'img/fan-128.png'},
         str(I2C_POWERMOD_FILTER1): {"name": "Filtr 1", "on": False, "override": False, 'img': 'img/fan-128.png'},
         str(I2C_POWERMOD_FILTER2): {"name": "Filtr 2", "on": False, "override": False, 'img': 'img/fan-128.png'},
@@ -56,12 +56,12 @@ class Register:
     LAMPS_SETTINGS = None
 
     LIGHT1_ADDRESS = 0x12
-    LIGHT1_PERCENT = 100
+    LIGHT1_PERCENT = 0
     LIGHT1_TEMP = 23.0
 
     # LIGHT2 ZONE
     LIGHT2_ADDRESS = 0x14
-    LIGHT2_PERCENT = 100
+    LIGHT2_PERCENT = 0
 
     # FEEDER ZONE
     FEEDER_RUNNING = False
