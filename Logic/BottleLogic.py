@@ -79,12 +79,11 @@ class BottleThread(threading.Thread):
         #    Register.BOTTLE_MANUAL_REMAINING_DOSE = dose
 
         number = int(bottle) - 1
+
         BottleModHelper.set_switch(number)
-        for x in range(dose):
-            time.sleep(Register.BOTTLE_SETTINGS[bottle]['ml_per_sec'])
-            if manual:
-                Register.BOTTLE_MANUAL_DOSE -= 1
+        time.sleep(time_dose)
         BottleModHelper.unset_switch(number)
+
         Helpers.log("Koniec dozowania z pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'])
         Register.BOTTLE_SETTINGS[bottle]['dosed'] = True
 

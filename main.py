@@ -1,29 +1,26 @@
-import thread
 import threading
-from subprocess import PIPE, Popen
 
+import RPi.GPIO as GPIO
+
+import Display
 import Helpers
 import settings
 from register import Register
 
-#import Display
+# import Display
 import Logic
-from Logic import BottleLogic
-from Logic import ReminderThread
 import RestThread
 import time
 
 
 def main():
+    GPIO.cleanup()
+
     settings.load_settings()
 
-    threads = []
-    #threads.append(WatchdogThread.WatchdogThread())
-    threads.append(Logic.Logic())
-    #threads.append(Display.Display())
-    #threads.append(ReminderThread.ReminderThread())
-    threads.append(threading.Thread(target=RestThread.run_server))
-
+    threads = [Logic.Logic(), Display.DisplayThread(), threading.Thread(target=RestThread.run_server)]
+    # threads.append(WatchdogThread.WatchdogThread())
+    # threads.append(ReminderThread.ReminderThread())
 
     for th in threads:
         th.start()
@@ -47,6 +44,7 @@ def main():
     Helpers.log("ZAPISYWANIE KONFIGURACJI")
     settings.save_settings()
     Helpers.log("ZAMYKANIE APLIKACJI")
+
 
 if __name__ == "__main__":
     main()

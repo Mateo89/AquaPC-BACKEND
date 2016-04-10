@@ -1,15 +1,13 @@
+from Logic.LircThread import LircThread
+
 __author__ = 'mateu'
 
 from TempThread import TempThread
-#from LircThread import LircThread
-#import lirc
+from LircThread import LircThread
 import threading
 import time
-import Helpers
-from datetime import datetime
 from register import Register
 from Helpers import PowerModHelper
-
 
 from Logic import Light1Logic
 from Logic import Light2Logic
@@ -20,8 +18,6 @@ from Logic import Filter1Logic
 from Logic import Filter2Logic
 from Logic import LightModeLogic
 from Logic import BottleLogic
-
-import math
 
 
 class Logic(threading.Thread):
@@ -34,7 +30,7 @@ class Logic(threading.Thread):
         threading.Thread.__init__(self)
 
         self.threads.append(TempThread())
-        #self.threads.append(LircThread())
+        self.threads.append(LircThread())
 
         self.threads.append(Light1Logic.Light1Thread())
         self.threads.append(Light2Logic.Light2Thread())
