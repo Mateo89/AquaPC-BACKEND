@@ -14,11 +14,11 @@ def filter2_logic():
 
 
 def block_filter():
-    Register.I2C_POWERMOD_FILTER2_OVERDRIVE = True
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_FILTER2)]['override'] = True
 
 
 def unblock_filter():
-    Register.I2C_POWERMOD_FILTER2_OVERDRIVE = False
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_FILTER2)]['override'] = False
 
 
 def toggle_filter():

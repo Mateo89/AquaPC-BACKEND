@@ -48,19 +48,19 @@ def turn_off_heaters():
 
 
 def block_heater():
-    Register.I2C_POWERMOD_HEATER_OVERDRIVE = True
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_HEATER)]['override'] = True
 
 
 def block_heater_led():
-    Register.I2C_POWERMOD_HEATER_LED_OVERDRIVE = True
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_HEATER_LED)]['override'] = True
 
 
 def unblock_heater():
-    Register.I2C_POWERMOD_HEATER_OVERDRIVE = False
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_HEATER)]['override'] = False
 
 
 def unblock_heater_led():
-    Register.I2C_POWERMOD_HEATER_LED_OVERDRIVE = False
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_HEATER_LED)]['override'] = False
 
 
 def toggle_heater():

@@ -26,6 +26,28 @@ def set_percent(percent):
     Register.LIGHT2_PERCENT = percent
 
 
+def up_percent(up):
+    percent = Register.LIGHT2_PERCENT + up
+    if percent > 100:
+        percent = 100
+    Register.LIGHT2_PERCENT = percent
+
+
+def down_percent(down):
+    percent = Register.LIGHT2_PERCENT - down
+    if percent < 0:
+        percent = 0
+    Register.LIGHT2_PERCENT = percent
+
+
+def block():
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override'] = True
+
+
+def unblock():
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override'] = False
+
+
 def toggle_light():
     PowerModHelper.toggle_switch(Register.I2C_POWERMOD_LIGHT2)
 

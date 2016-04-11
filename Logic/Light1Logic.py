@@ -27,6 +27,29 @@ def set_percent(percent):
     Register.LIGHT1_PERCENT = percent
 
 
+def up_percent(up):
+    percent = Register.LIGHT1_PERCENT + up
+    if percent > 100:
+        percent = 100
+    Register.LIGHT1_PERCENT = percent
+
+
+def down_percent(down):
+    percent = Register.LIGHT1_PERCENT - down
+    if percent < 0:
+        percent = 0
+    Register.LIGHT1_PERCENT = percent
+
+
+def block():
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT1)]['override'] = True
+
+
+def unblock():
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT1)]['override'] = False
+
+
+
 def toggle_light():
     PowerModHelper.toggle_switch(Register.I2C_POWERMOD_LIGHT1)
 
@@ -65,7 +88,6 @@ class Light1Thread(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
-        self.percent = 0
 
     def process_heater(self):
         pass

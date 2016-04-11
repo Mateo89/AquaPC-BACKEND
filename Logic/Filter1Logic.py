@@ -12,14 +12,14 @@ def filter1_logic():
     else:
         PowerModHelper.set_switch(Register.I2C_POWERMOD_FILTER1)
 
+
 def block_filter():
-    Register.I2C_POWERMOD_FILTER1_OVERDRIVE = True
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_FILTER1)]['override'] = True
 
 
 def unblock_filter():
-    Register.I2C_POWERMOD_FILTER1_OVERDRIVE = False
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_FILTER1)]['override'] = False
 
 
 def toggle_filter():
     PowerModHelper.toggle_switch(Register.I2C_POWERMOD_FILTER1)
-

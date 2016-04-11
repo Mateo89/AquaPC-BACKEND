@@ -6,15 +6,11 @@ from Helpers import LircEvents
 
 class MenuWindow:
 
-    selecedIndex = 0
-    tiles = []
+    selected_index = 0
     redraw = True
 
     def __init__(self):
         pass
-
-    def __del__(self):
-        self.tiles = None
 
     def event(self):
         if not Register.LIRC_EVENTS:
@@ -25,19 +21,21 @@ class MenuWindow:
             DisplayRegister.set_mainWindow()
 
         if lirc_event == LircEvents.KEY_RIGHT:
-            self.selecedIndex = (self.selecedIndex + 1) % 3
+            self.selected_index = (self.selected_index + 1) % 4
             self.redraw = True
 
         if lirc_event == LircEvents.KEY_LEFT:
-            self.selecedIndex = (self.selecedIndex - 1) % 3
+            self.selected_index = (self.selected_index - 1) % 4
             self.redraw = True
 
         if lirc_event == LircEvents.KEY_OK:
-            if self.selecedIndex == 0:
-                DisplayRegister.set_lightWindow()
-            if self.selecedIndex == 1:
-                DisplayRegister.set_bottleWindow()
-            if self.selecedIndex == 2:
+            if self.selected_index == 0:
+                DisplayRegister.set_switchWindow()
+            if self.selected_index == 1:
+                DisplayRegister.set_light1_settings_window()
+            if self.selected_index == 2:
+                DisplayRegister.set_light2_settings_window()
+            if self.selected_index == 3:
                 DisplayRegister.set_mainWindow()
 
     def redraw_text(self):
@@ -50,15 +48,18 @@ class MenuWindow:
 
         self.redraw = False
 
-        if self.selecedIndex == 0:
+        if self.selected_index == 0:
             with cleared(Register.LCD):
-                Register.LCD.write_string("      MENU\n\r  PRZLACZNIKI")
-        if self.selecedIndex == 1:
+                Register.LCD.write_string("      MENU\n\r  PRZELACZNIKI")
+        if self.selected_index == 1:
             with cleared(Register.LCD):
-                Register.LCD.write_string("      MENU\n\r  USTAWIENIA")
-        if self.selecedIndex == 2:
+                Register.LCD.write_string("      MENU\n\r    LAMPA 1")
+        if self.selected_index == 2:
             with cleared(Register.LCD):
-                Register.LCD.write_string("      MENU\n\r  WYJSCIE")
+                Register.LCD.write_string("      MENU\n\r    LAMPA 2")
+        if self.selected_index == 3:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("      MENU\n\r    WYJSCIE")
 
 
 

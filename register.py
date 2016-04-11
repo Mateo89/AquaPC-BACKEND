@@ -83,3 +83,14 @@ class Register:
     @staticmethod
     def initRegister():
         pass
+
+    @staticmethod
+    def get_switch_state(switch):
+        if Register.POWERMOD_DATA[str(switch)]['on']:
+            return "ON"
+        else:
+            return "OFF"
+
+
+
+

@@ -1,35 +1,27 @@
-import os
+from RPLCD import cleared
 
 from Display import DisplayRegister
-from Display.BarTile import BarTile
-import pygame
-from Helpers import Colors
-from Helpers.Coordinate import Coordinate
-from Helpers.Fonts import Fonts
-from Logic import Light1Logic
-from register import Register
-from Helpers import LircEvents
+from Helpers import LircEvents, PowerModHelper
+from Logic import Co2Logic
 from Logic import Filter1Logic
 from Logic import Filter2Logic
 from Logic import O2Logic
-from Logic import Co2Logic
 from Logic import WaterTempLogic
+from register import Register
 
-class SwitchWindow():
+
+class SwitchWindow:
 
     lcd = None
 
-    barTile =None
-    selectedIndex = 0
+    selected_index = 0
+    redraw = True
 
     def __init__(self):
         self.lcd = Register.LCD
-        self.barTile = BarTile(Coordinate(0, 0, 400, 25),"Wlacznik","switch25.png")
-        self.filter1 = pygame.image.load(os.path.join('icons', 'fan32.png'))
-        self.filter2 = pygame.image.load(os.path.join('icons', 'fan32.png'))
-        self.heater = pygame.image.load(os.path.join('icons', 'heater32.png'))
-        self.switch_on = pygame.image.load(os.path.join('icons', 'switchon50.png'))
-        self.switch_off = pygame.image.load(os.path.join('icons', 'switchoff50.png'))
+
+    def redraw_text(self):
+        self.redraw = True
 
     def event(self):
         if not Register.LIRC_EVENTS:
@@ -40,167 +32,100 @@ class SwitchWindow():
             DisplayRegister.set_menuWindow()
 
         if lirc_event == LircEvents.KEY_RIGHT:
-            self.selectedIndex = (self.selectedIndex + 1) % 7
-        if lirc_event == LircEvents.KEY_DOWN:
-
-            if self.selectedIndex == 3 or self.selectedIndex == 4 or self.selectedIndex == 5:
-                self.selectedIndex = 6
-            else:
-                self.selectedIndex = (self.selectedIndex + 3) % 7
+            self.selected_index = (self.selected_index + 1) % 8
+            self.redraw = True
 
         if lirc_event == LircEvents.KEY_LEFT:
-            self.selectedIndex = (self.selectedIndex - 1) % 7
-        if lirc_event == LircEvents.KEY_UP:
-            if self.selectedIndex == 6:
-                self.selectedIndex = 3
-            else:
-                self.selectedIndex = (self.selectedIndex - 3) % 7
+            self.selected_index = (self.selected_index - 1) % 8
+            self.redraw = True
 
         if lirc_event == LircEvents.KEY_OK:
-            if self.selectedIndex == 0:
+            if self.selected_index == 0:
                 Filter1Logic.block_filter()
                 Filter1Logic.toggle_filter()
+                self.redraw = True
 
-            if self.selectedIndex == 1: # podniesienie procentow o 5%
-                O2Logic.block_o2()
-                O2Logic.toggle_o2()
-
-            if self.selectedIndex == 2:
-                WaterTempLogic.block_heater()
-                WaterTempLogic.toggle_heater()
-
-            if self.selectedIndex == 3:
+            if self.selected_index == 1:
                 Filter2Logic.block_filter()
                 Filter2Logic.toggle_filter()
+                self.redraw = True
 
-            if self.selectedIndex == 4:
+            if self.selected_index == 2:
+                O2Logic.block_o2()
+                O2Logic.toggle_o2()
+                self.redraw = True
+
+            if self.selected_index == 3:
                 Co2Logic.block_co2()
                 Co2Logic.toggle_co2()
+                self.redraw = True
 
-            if self.selectedIndex == 5:
+            if self.selected_index == 4:
+                WaterTempLogic.block_heater()
+                WaterTempLogic.toggle_heater()
+                self.redraw = True
+
+            if self.selected_index == 5:
                 WaterTempLogic.block_heater_led()
                 WaterTempLogic.toggle_heater_led()
+                self.redraw = True
 
-            if self.selectedIndex == 6:
-                Filter1Logic.unblock_filter()
-                Filter2Logic.unblock_filter()
-                O2Logic.unblock_o2()
-                Co2Logic.unblock_co2()
-                WaterTempLogic.unblock_heater()
-                WaterTempLogic.unblock_heater_led()
+            if self.selected_index == 6:
+                for switch in Register.POWERMOD_DATA.viewkeys():
+                    PowerModHelper.remove_override_switch(switch)
+
+            if self.selected_index == 7:
+                DisplayRegister.set_menuWindow()
+
+    def get_override(self, switch):
+        if Register.POWERMOD_DATA[str(switch)]['override']:
+            return "!"
+        else:
+            return ""
 
     def draw(self):
+        if not self.redraw:
+            return
 
-        self.lcd.fill(Colors.BLACK)
-        self.barTile.draw_tile()
+        self.redraw = False
 
-        cord = Coordinate(20, 40, 110, 60)
-        if Register.I2C_POWERMOD_FILTER1_OVERDRIVE:
-            pygame.draw.rect(self.lcd, Colors.RED, pygame.Rect(cord.locate(0,0),cord.size()))
-        else:
-            pygame.draw.rect(self.lcd, Colors.BLUE, pygame.Rect(cord.locate(0,0),cord.size()))
+        if self.selected_index == 0:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("  PRZELACZNIKI\n\rFILTR 1     " +
+                                          Register.get_switch_state(Register.I2C_POWERMOD_FILTER1) +
+                                          self.get_override(Register.I2C_POWERMOD_FILTER1))
+        if self.selected_index == 1:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("  PRZELACZNIKI\n\rFILTR 2     " +
+                                          Register.get_switch_state(Register.I2C_POWERMOD_FILTER2) +
+                                          self.get_override(Register.I2C_POWERMOD_FILTER2))
+        if self.selected_index == 2:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("  PRZELACZNIKI\n\rO2          " +
+                                          Register.get_switch_state(Register.I2C_POWERMOD_O2) +
+                                          self.get_override(Register.I2C_POWERMOD_O2))
+        if self.selected_index == 3:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("  PRZELACZNIKI\n\rCO2         " +
+                                          Register.get_switch_state(Register.I2C_POWERMOD_CO2) +
+                                          self.get_override(Register.I2C_POWERMOD_CO2))
+        if self.selected_index == 4:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("  PRZELACZNIKI\n\rGRZALKA     " +
+                                          Register.get_switch_state(Register.I2C_POWERMOD_HEATER) +
+                                          self.get_override(Register.I2C_POWERMOD_HEATER))
+        if self.selected_index == 5:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("  PRZELACZNIKI\n\rGRZALKA LED " +
+                                          Register.get_switch_state(Register.I2C_POWERMOD_HEATER_LED) +
+                                          self.get_override(Register.I2C_POWERMOD_HEATER_LED))
+        if self.selected_index == 6:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("  PRZELACZNIKI\n\r  RESET BLOKAD ")
+        if self.selected_index == 7:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("  PRZELACZNIKI\n\r    WYJSCIE")
 
-        self.lcd.blit(self.filter1, cord.locate(3, 3))
 
-        if Register.I2C_POWERMOD_FILTER1_FLAG:
-            self.lcd.blit(self.switch_on, cord.locate(55,20))
-        else:
-            self.lcd.blit(self.switch_off, cord.locate(55,20))
-        text_surface = Fonts.font_30.render("1", True, Colors.WHITE)
-        self.lcd.blit(text_surface, cord.locate(35, 20))
-        if self.selectedIndex == 0:
-            pygame.draw.rect(self.lcd, Colors.GRAY, pygame.Rect(cord.locate(0,0),
-                                                                 cord.size()),2)
-
-        cord = Coordinate(145, 40, 110, 60)
-        if Register.I2C_POWERMOD_O2_OVERDRIVE:
-            pygame.draw.rect(self.lcd, Colors.RED, pygame.Rect(cord.locate(0,0),cord.size()))
-        else:
-            pygame.draw.rect(self.lcd, Colors.BLUE, pygame.Rect(cord.locate(0,0),cord.size()))
-        text_surface = Fonts.font_40.render("O2", True, Colors.WHITE)
-        self.lcd.blit(text_surface, cord.locate(5, 5))
-
-        if Register.I2C_POWERMOD_O2_FLAG:
-            self.lcd.blit(self.switch_on, cord.locate(55,20))
-        else:
-            self.lcd.blit(self.switch_off, cord.locate(55,20))
-        if self.selectedIndex == 1:
-            pygame.draw.rect(self.lcd, Colors.GRAY, pygame.Rect(cord.locate(0,0),
-                                                                 cord.size()),2)
-
-        cord = Coordinate(270, 40, 110, 60)
-        if Register.I2C_POWERMOD_HEATER_OVERDRIVE:
-            pygame.draw.rect(self.lcd, Colors.RED, pygame.Rect(cord.locate(0,0),cord.size()))
-        else:
-            pygame.draw.rect(self.lcd, Colors.BLUE, pygame.Rect(cord.locate(0,0),cord.size()))
-        self.lcd.blit(self.heater, cord.locate(3, 3))
-
-        if Register.I2C_POWERMOD_HEATER_FLAG:
-            self.lcd.blit(self.switch_on, cord.locate(55,20))
-        else:
-            self.lcd.blit(self.switch_off, cord.locate(55,20))
-
-        if self.selectedIndex == 2:
-            pygame.draw.rect(self.lcd, Colors.GRAY, pygame.Rect(cord.locate(0,0),
-                                                                 cord.size()),2)
-
-        ### 2 linia
-
-        cord = Coordinate(20, 110, 110, 60)
-        if Register.I2C_POWERMOD_FILTER2_OVERDRIVE:
-            pygame.draw.rect(self.lcd, Colors.RED, pygame.Rect(cord.locate(0,0),cord.size()))
-        else:
-            pygame.draw.rect(self.lcd, Colors.BLUE, pygame.Rect(cord.locate(0,0),cord.size()))
-        self.lcd.blit(self.filter2, cord.locate(3, 3))
-        if Register.I2C_POWERMOD_FILTER2_FLAG:
-            self.lcd.blit(self.switch_on, cord.locate(55,20))
-        else:
-            self.lcd.blit(self.switch_off, cord.locate(55,20))
-        text_surface = Fonts.font_30.render("2", True, Colors.WHITE)
-        self.lcd.blit(text_surface, cord.locate(35, 20))
-        if self.selectedIndex == 3:
-            pygame.draw.rect(self.lcd, Colors.GRAY, pygame.Rect(cord.locate(0,0),
-                                                                 cord.size()),2)
-
-        cord = Coordinate(145, 110, 110, 60)
-        if Register.I2C_POWERMOD_CO2_OVERDRIVE:
-            pygame.draw.rect(self.lcd, Colors.RED, pygame.Rect(cord.locate(0,0),cord.size()))
-        else:
-            pygame.draw.rect(self.lcd, Colors.BLUE, pygame.Rect(cord.locate(0,0),cord.size()))
-        text_surface = Fonts.font_40.render("CO2", True, Colors.WHITE)
-        self.lcd.blit(text_surface, cord.locate(5, 5))
-        if Register.I2C_POWERMOD_CO2_FLAG:
-            self.lcd.blit(self.switch_on, cord.locate(55,20))
-        else:
-            self.lcd.blit(self.switch_off, cord.locate(55,20))
-        if self.selectedIndex == 4:
-            pygame.draw.rect(self.lcd, Colors.GRAY, pygame.Rect(cord.locate(0,0),
-                                                                 cord.size()),2)
-
-        cord = Coordinate(270, 110, 110, 60)
-        if Register.I2C_POWERMOD_HEATER_LED_OVERDRIVE:
-            pygame.draw.rect(self.lcd, Colors.RED, pygame.Rect(cord.locate(0,0),cord.size()))
-        else:
-            pygame.draw.rect(self.lcd, Colors.BLUE, pygame.Rect(cord.locate(0,0),cord.size()))
-        self.lcd.blit(self.heater, cord.locate(3, 3))
-
-        if Register.I2C_POWERMOD_HEATER_LED_FLAG:
-            self.lcd.blit(self.switch_on, cord.locate(55,20))
-        else:
-            self.lcd.blit(self.switch_off, cord.locate(55,20))
-        text_surface = Fonts.font_20.render("LED", True, Colors.WHITE)
-        self.lcd.blit(text_surface, cord.locate(8, 35))
-        if self.selectedIndex == 5:
-            pygame.draw.rect(self.lcd, Colors.GRAY, pygame.Rect(cord.locate(0,0),
-                                                                 cord.size()),2)
-
-        # AUTO
-        cord = Coordinate(100, 190, 200, 40)
-        pygame.draw.rect(self.lcd, Colors.BLUE, pygame.Rect(cord.locate(0,0),cord.size()))
-        text_surface = Fonts.font_40.render("AUTO", True, Colors.WHITE)
-        self.lcd.blit(text_surface, cord.locate(60, 5))
-        if self.selectedIndex == 6:
-            pygame.draw.rect(self.lcd, Colors.GRAY, pygame.Rect(cord.locate(0,0),
-                                                                 cord.size()),2)
 
 

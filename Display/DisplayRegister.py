@@ -49,6 +49,7 @@ def set_switchWindow():
         from MenuWindow import SwitchWindow
         DISPLAY_REGISTER['switchWindow'] = SwitchWindow.SwitchWindow()
     Register.CURRENT_SCREEN = DISPLAY_REGISTER['switchWindow']
+    Register.CURRENT_SCREEN.redraw_text()
 
 
 def set_settingsWindow():
@@ -63,6 +64,7 @@ def set_light1_settings_window():
         from MenuWindow import Light1Settings
         DISPLAY_REGISTER['light1SettingsWindow'] = Light1Settings.Light1SettingWindow()
     Register.CURRENT_SCREEN = DISPLAY_REGISTER['light1SettingsWindow']
+    Register.CURRENT_SCREEN.redraw_text()
 
 
 def set_light2_settings_window():
@@ -70,6 +72,7 @@ def set_light2_settings_window():
         from MenuWindow import Light2Settings
         DISPLAY_REGISTER['light2SettingsWindow'] = Light2Settings.Light2SettingWindow()
     Register.CURRENT_SCREEN = DISPLAY_REGISTER['light2SettingsWindow']
+    Register.CURRENT_SCREEN.redraw_text()
 
 
 def set_bottle_settings_window():

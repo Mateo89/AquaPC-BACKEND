@@ -36,11 +36,11 @@ def co2_logic():
 
 
 def block_co2():
-    Register.I2C_POWERMOD_CO2_OVERDRIVE = True
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['override'] = True
 
 
 def unblock_co2():
-    Register.I2C_POWERMOD_CO2_OVERDRIVE = False
+    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['override'] = False
 
 
 def turn_on():
