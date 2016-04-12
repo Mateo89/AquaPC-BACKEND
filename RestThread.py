@@ -67,16 +67,13 @@ def state_switches_get():
 
 @app.route('/api/state/logs', methods=['GET'])
 def state_log_get():
-    data = [
-                {'date': '2016-02-02 16:45:33', 'message': "Podawanie dawki z pojemnika: K przez czas: 20 sec"},
-                {'date': '2016-02-02 16:45:33', 'message': "Koniec dozowania z pojemnika: N"},
-                {'date': '2016-02-02 16:45:33', 'message': "Podawanie dawki z pojemnika: N przez czas: 10,2 sec"},
-            ]
+    data = Register.LOGS_EVENTS
     return jsonify({'data': data})
 
 
 @app.route('/api/state/logs', methods=['DELETE'])
 def state_log_delete():
+    Register.LOGS_EVENTS = []
     return jsonify({'data': None})
 
 
