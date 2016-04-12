@@ -10,11 +10,21 @@
                 "on": true,
                 "states": [
                     {
-                        "percent": "100",
+                        "percent": [
+                            0,
+                            0,
+                            8,
+                            0
+                        ],
                         "time": "13:00"
                     },
                     {
-                        "percent": 0,
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
                         "time": "23:23"
                     }
                 ]
@@ -25,15 +35,30 @@
                 "on": true,
                 "states": [
                     {
-                        "percent": "20",
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
                         "time": "11:00"
                     },
                     {
-                        "percent": "100",
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
                         "time": "13:00"
                     },
                     {
-                        "percent": 0,
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
                         "time": "21:00"
                     }
                 ]
@@ -50,8 +75,22 @@
                 "on": true,
                 "states": [
                     {
-                        "percent": 0,
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
                         "time": "10:00"
+                    },
+                    {
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        "time": "22:00"
                     }
                 ]
             },
@@ -75,7 +114,7 @@
             }
         ],
         "use_heater_delta": "6",
-        "use_heater_on": true,
+        "use_heater_on": false,
         "water_change_on": true,
         "water_change_percent": 30
     },
@@ -90,7 +129,13 @@
                 "on": false,
                 "states": [
                     {
-                        "percent": 0
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        "time": "21:00"
                     }
                 ]
             },
@@ -100,7 +145,13 @@
                 "on": false,
                 "states": [
                     {
-                        "percent": 0
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        "time": "21:00"
                     }
                 ]
             },
@@ -110,16 +161,40 @@
                 "on": true,
                 "states": [
                     {
-                        "percent": 0,
-                        "time": "10:20"
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        "time": "21:00"
                     }
                 ]
             },
             {
                 "day_of_week": 3,
                 "name": "CZWARTEK",
-                "on": false,
-                "states": []
+                "on": true,
+                "states": [
+                    {
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        "time": "21:00"
+                    },
+                    {
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        "time": "21:00"
+                    }
+                ]
             },
             {
                 "day_of_week": 4,
@@ -127,8 +202,13 @@
                 "on": true,
                 "states": [
                     {
-                        "percent": 0,
-                        "time": "11:23"
+                        "percent": [
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        "time": "21:00"
                     }
                 ]
             },

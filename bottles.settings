@@ -7,8 +7,8 @@
         "ml_per_sec": 0.2,
         "name": "AZOT",
         "on": true,
-        "percent": 85,
-        "state": 426,
+        "percent": 84,
+        "state": 424.8,
         "times": [
             {
                 "day_of_week": 0,
@@ -65,7 +65,7 @@
         "alert": false,
         "alertpercent": 10,
         "capacity": 500,
-        "dosed": false,
+        "dosed": true,
         "ml_per_sec": 0.1,
         "name": "POTAS",
         "on": true,
@@ -105,7 +105,7 @@
                 "dose": 15.2,
                 "name": "PIATEK",
                 "on": true,
-                "time": "18:45"
+                "time": "17:57"
             },
             {
                 "day_of_week": 5,
@@ -313,7 +313,7 @@
         "alert": false,
         "alertpercent": 10,
         "capacity": 500,
-        "dosed": true,
+        "dosed": false,
         "ml_per_sec": 2.2,
         "name": "MIKRO",
         "on": true,

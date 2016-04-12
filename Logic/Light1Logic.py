@@ -20,25 +20,25 @@ def light1_logic():
             set_percent(Register.LAMPS_SETTINGS['1']['water_change_percent'])
     else:
         percent = TimesHelper.process_times_states(Register.LAMPS_SETTINGS['1']['times'])
-        set_percent(int(percent))
+        set_percent(percent)
 
 
 def set_percent(percent):
     Register.LIGHT1_PERCENT = percent
 
 
-def up_percent(up):
-    percent = Register.LIGHT1_PERCENT + up
+def up_percent(up, channel):
+    percent = Register.LIGHT1_PERCENT[channel] + up
     if percent > 100:
         percent = 100
-    Register.LIGHT1_PERCENT = percent
+    Register.LIGHT1_PERCENT[channel] = percent
 
 
-def down_percent(down):
-    percent = Register.LIGHT1_PERCENT - down
+def down_percent(down, channel):
+    percent = Register.LIGHT1_PERCENT[channel] - down
     if percent < 0:
         percent = 0
-    Register.LIGHT1_PERCENT = percent
+    Register.LIGHT1_PERCENT[channel] = percent
 
 
 def block():
@@ -66,15 +66,16 @@ def process_percent(percent):
 
     lamp_percent = Register.LIGHT1_PERCENT
 
-    if percent < lamp_percent:
-        percent += 1
-        Light1ModHelper.update_data(percent)
+    for i in range(0, len(lamp_percent)):
+        if percent[i] < lamp_percent[i]:
+            percent[i] += 1
+            Light1ModHelper.update_data(i, percent[i])
 
-    if percent > lamp_percent:
-        percent -= 1
-        Light1ModHelper.update_data(percent)
+        if percent[i] > lamp_percent[i]:
+            percent[i] -= 1
+            Light1ModHelper.update_data(i, percent[i])
 
-    if percent == 0:
+    if percent[0] == 0 and percent[1] == 0 and percent[2] == 0 and percent[3] == 0:
         turn_off()
     else:
         turn_on()
@@ -84,7 +85,7 @@ def process_percent(percent):
 
 class Light1Thread(threading.Thread):
 
-    percent = 0
+    percent = [0, 0, 0, 0]
 
     def __init__(self):
         threading.Thread.__init__(self)

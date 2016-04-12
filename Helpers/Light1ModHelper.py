@@ -26,7 +26,7 @@ def reset():
     pass
 
 
-def update_data(percent):
+def update_data(chanel, percent):
     #i2c_bus = SMBus(1)
     #i2c_bus.write_byte_data(Register.LIGHT1_ADDRESS, 0xff, anti_log[percent])
     pass

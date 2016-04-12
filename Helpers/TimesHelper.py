@@ -48,10 +48,9 @@ def process_times_between(times):
         return False
 
 
-#do dokonczenia
 def process_times_states(times):
 
-    percent = 0
+    percent = [0, 0, 0, 0]
 
     # sprawdzenie jaki jest dzien tygodnia
     time_now = datetime.datetime.now()
@@ -71,7 +70,7 @@ def process_times_states(times):
         if time_now < time_state:
             return percent
         else:
-            percent = int(state['percent'])
+            percent = state['percent']
     return percent
 
 

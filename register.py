@@ -56,12 +56,12 @@ class Register:
     LAMPS_SETTINGS = None
 
     LIGHT1_ADDRESS = 0x12
-    LIGHT1_PERCENT = 0
+    LIGHT1_PERCENT = [0, 0, 0, 0]
     LIGHT1_TEMP = 23.0
 
     # LIGHT2 ZONE
     LIGHT2_ADDRESS = 0x14
-    LIGHT2_PERCENT = 0
+    LIGHT2_PERCENT = [0, 0, 0, 0]
 
     # FEEDER ZONE
     FEEDER_RUNNING = False

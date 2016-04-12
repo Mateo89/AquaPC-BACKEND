@@ -24,31 +24,55 @@ class Light1SettingWindow():
             DisplayRegister.set_menuWindow()
 
         if lirc_event == LircEvents.KEY_RIGHT:
-            self.selected_index = (self.selected_index + 1) % 3
+            self.selected_index = (self.selected_index + 1) % 6
             self.redraw = True
 
         if lirc_event == LircEvents.KEY_LEFT:
-            self.selected_index = (self.selected_index - 1) % 3
+            self.selected_index = (self.selected_index - 1) % 6
             self.redraw = True
 
         if lirc_event == LircEvents.KEY_UP:
             if self.selected_index == 0:
                 Light1Logic.block()
-                Light1Logic.up_percent(5)
+                Light1Logic.up_percent(5, 0)
+                self.redraw = True
+            if self.selected_index == 1:
+                Light1Logic.block()
+                Light1Logic.up_percent(5, 1)
+                self.redraw = True
+            if self.selected_index == 2:
+                Light1Logic.block()
+                Light1Logic.up_percent(5, 2)
+                self.redraw = True
+            if self.selected_index == 3:
+                Light1Logic.block()
+                Light1Logic.up_percent(5, 3)
                 self.redraw = True
 
         if lirc_event == LircEvents.KEY_DOWN:
             if self.selected_index == 0:
                 Light1Logic.block()
-                Light1Logic.down_percent(5)
+                Light1Logic.down_percent(5, 0)
+                self.redraw = True
+            if self.selected_index == 1:
+                Light1Logic.block()
+                Light1Logic.down_percent(5, 1)
+                self.redraw = True
+            if self.selected_index == 2:
+                Light1Logic.block()
+                Light1Logic.down_percent(5, 2)
+                self.redraw = True
+            if self.selected_index == 3:
+                Light1Logic.block()
+                Light1Logic.down_percent(5, 3)
                 self.redraw = True
 
         if lirc_event == LircEvents.KEY_OK:
 
-            if self.selected_index == 1:
+            if self.selected_index == 4:
                 Light1Logic.unblock()
 
-            if self.selected_index == 2:
+            if self.selected_index == 5:
                 DisplayRegister.set_menuWindow()
 
     def redraw_text(self):
@@ -69,12 +93,27 @@ class Light1SettingWindow():
 
         if self.selected_index == 0:
             with cleared(Register.LCD):
-                Register.LCD.write_string("    LAMPA 1\n\r  PROCENT  " +
-                                          str(Register.LIGHT1_PERCENT) + "%" +
+                Register.LCD.write_string("    LAMPA 1\n\rPROCENT CH1 " +
+                                          str(Register.LIGHT1_PERCENT[0]) + "%" +
                                           self.get_override(Register.I2C_POWERMOD_LIGHT1))
         if self.selected_index == 1:
             with cleared(Register.LCD):
-                Register.LCD.write_string("    LAMPA 1\n\r  RESET BLOKAD ")
+                Register.LCD.write_string("    LAMPA 1\n\rPROCENT CH2 " +
+                                          str(Register.LIGHT1_PERCENT[1]) + "%" +
+                                          self.get_override(Register.I2C_POWERMOD_LIGHT1))
         if self.selected_index == 2:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("    LAMPA 1\n\rPROCENT CH3 " +
+                                          str(Register.LIGHT1_PERCENT[2]) + "%" +
+                                          self.get_override(Register.I2C_POWERMOD_LIGHT1))
+        if self.selected_index == 3:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("    LAMPA 1\n\rPROCENT CH4 " +
+                                          str(Register.LIGHT1_PERCENT[3]) + "%" +
+                                          self.get_override(Register.I2C_POWERMOD_LIGHT1))
+        if self.selected_index == 4:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("    LAMPA 1\n\r  RESET BLOKAD ")
+        if self.selected_index == 5:
             with cleared(Register.LCD):
                 Register.LCD.write_string("    LAMPA 1\n\r    WYJSCIE")

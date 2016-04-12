@@ -26,18 +26,18 @@ def set_percent(percent):
     Register.LIGHT2_PERCENT = percent
 
 
-def up_percent(up):
-    percent = Register.LIGHT2_PERCENT + up
+def up_percent(up, channel):
+    percent = Register.LIGHT2_PERCENT[channel] + up
     if percent > 100:
         percent = 100
-    Register.LIGHT2_PERCENT = percent
+    Register.LIGHT2_PERCENT[channel] = percent
 
 
-def down_percent(down):
-    percent = Register.LIGHT2_PERCENT - down
+def down_percent(down, channel):
+    percent = Register.LIGHT2_PERCENT[channel] - down
     if percent < 0:
         percent = 0
-    Register.LIGHT2_PERCENT = percent
+    Register.LIGHT2_PERCENT[channel] = percent
 
 
 def block():
@@ -65,15 +65,16 @@ def process_percent(percent):
 
     lamp_percent = Register.LIGHT2_PERCENT
 
-    if percent < lamp_percent:
-        percent += 1
-        Light2ModHelper.update_data(percent)
+    for i in range(0, len(lamp_percent)):
+        if percent[i] < lamp_percent[i]:
+            percent[i] += 1
+            Light2ModHelper.update_data(i, percent[i])
 
-    if percent > lamp_percent:
-        percent -= 1
-        Light2ModHelper.update_data(percent)
+        if percent[i] > lamp_percent[i]:
+            percent[i] -= 1
+            Light2ModHelper.update_data(i, percent[i])
 
-    if percent == 0:
+    if percent[0] == 0 and percent[1] == 0 and percent[2] == 0 and percent[3] == 0:
         turn_off()
     else:
         turn_on()
@@ -83,7 +84,7 @@ def process_percent(percent):
 
 class Light2Thread(threading.Thread):
 
-    percent = 0
+    percent = [0, 0, 0, 0]
 
     def __init__(self):
         threading.Thread.__init__(self)
