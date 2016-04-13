@@ -5,7 +5,7 @@ from datetime import datetime
 def log(log):
     if Register.LOGS_FLAG:
         f = open('/opt/log/aquapc.log', 'a')
-        time = datetime.now().strftime('%y-%m-%d %H:%M:%S')
+        time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         tmp = time + " " + log
         f.write(tmp + "\n")
         f.close()
