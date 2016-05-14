@@ -1,10 +1,14 @@
+import datetime
+
 from Helpers import PowerModHelper, TimesHelper
 from register import Register
 
 
 def o2_logic():
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_O2)]['override']:
-        return
+        time_now = datetime.datetime.now()
+        if (time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_O2)]['override_time']):
+            return
 
     if not Register.O2_SETTINGS['on']:
         turn_off()

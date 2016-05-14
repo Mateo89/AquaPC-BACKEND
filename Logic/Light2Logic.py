@@ -1,17 +1,20 @@
+import datetime
 import threading
-
-from register import Register
-from Helpers import PowerModHelper, TimesHelper, Light2ModHelper
 import time
+
+from Helpers import PowerModHelper, TimesHelper, Light2ModHelper
+from register import Register
 
 
 def light2_logic():
 
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override']:
-        return
+        time_now = datetime.datetime.now()
+        if (time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT2)]['override_time']):
+            return
 
     if not Register.LAMPS_SETTINGS['2']['on']:
-        set_percent(0)
+        set_percent([0, 0, 0, 0])
         return
 
     if Register.CHANGE_WATER_MODE:
@@ -42,10 +45,14 @@ def down_percent(down, channel):
 
 def block():
     Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override'] = True
+    Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT2)]['override_time'] = datetime.datetime.now() \
+                                                                                          + datetime.timedelta(
+        minutes=Register.OVERRIDE_TIME)
 
 
 def unblock():
     Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override'] = False
+    Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT2)]['override_time'] = None
 
 
 def toggle_light():

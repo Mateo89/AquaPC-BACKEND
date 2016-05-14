@@ -1,13 +1,17 @@
-import Helpers
-from register import Register
-from Helpers import PowerModHelper
+import datetime
 import math
+
+from Helpers import PowerModHelper
+from register import Register
 
 
 def water_temp_logic():
 
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_HEATER)]['override'] or Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_HEATER_LED)]['override']:
-        return
+        time_now = datetime.datetime.now()
+        if (time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_HEATER)]['override_time'] and
+                    time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_HEATER_LED)]['override_time']):
+            return
 
     # sprawdzenie czy grzalki powinny dzialac
     if not Register.CHANGE_WATER_MODE:

@@ -1,5 +1,6 @@
 {
-    "full_day": false,
+    "bind_with_filter": true,
+    "full_day": true,
     "on": true,
     "times": [
         {
@@ -52,6 +53,5 @@
             "to": "18:23"
         }
     ],
-    "water_change_off": true,
-    "bind_with_filter": true
+    "water_change_off": true
 }

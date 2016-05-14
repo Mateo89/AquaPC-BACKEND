@@ -1,8 +1,9 @@
 __author__ = 'mateu'
-from register import Register
-import time
 import threading
+import time
 from subprocess import Popen, PIPE
+
+from register import Register
 
 
 class TempThread(threading.Thread):

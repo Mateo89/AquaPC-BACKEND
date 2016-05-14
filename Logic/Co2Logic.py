@@ -1,11 +1,14 @@
-import Helpers
+import datetime
+
 from Helpers import PowerModHelper, TimesHelper
 from register import Register
 
 
 def co2_logic():
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['override']:
-        return
+        time_now = datetime.datetime.now()
+        if (time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_CO2)]['override_time']):
+            return
 
     if not Register.CO2_SETTINGS['on']:
         turn_off()
@@ -36,11 +39,11 @@ def co2_logic():
 
 
 def block_co2():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['override'] = True
+    PowerModHelper.override_switch(Register.I2C_POWERMOD_CO2)
 
 
 def unblock_co2():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['override'] = False
+    PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_CO2)
 
 
 def turn_on():

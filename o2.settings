@@ -6,7 +6,7 @@
             "day_of_week": 1,
             "from": "10:30",
             "name": "PONIEDZIALEK",
-            "on": true,
+            "on": false,
             "to": "18.23"
         },
         {
@@ -28,7 +28,7 @@
             "from": "10:30",
             "name": "CZWARTEK",
             "on": false,
-            "to": "18.23"
+            "to": "22:00"
         },
         {
             "day_of_week": 5,

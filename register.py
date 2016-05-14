@@ -1,5 +1,7 @@
 __author__ = 'mateu'
 
+import datetime
+
 class Register:
 
     # DISPLAY
@@ -51,16 +53,29 @@ class Register:
         str(I2C_POWERMOD_HEATER_LED): {"name": "Grzalka LED", "on": False, "override": False, 'img': 'img/heater128.png'}
     }
 
+    OVERRIDE_TIME = 1
+
+    POWERMOD_DATA_OVERRIDE = {
+        str(I2C_POWERMOD_LIGHT1): {"override_time": datetime.datetime.now()},
+        str(I2C_POWERMOD_LIGHT2): {"override_time": datetime.datetime.now()},
+        str(I2C_POWERMOD_FILTER1): {"override_time": datetime.datetime.now()},
+        str(I2C_POWERMOD_FILTER2): {"override_time": datetime.datetime.now()},
+        str(I2C_POWERMOD_O2): {"override_time": datetime.datetime.now()},
+        str(I2C_POWERMOD_CO2): {"override_time": datetime.datetime.now()},
+        str(I2C_POWERMOD_HEATER): {"override_time": datetime.datetime.now()},
+        str(I2C_POWERMOD_HEATER_LED): {"override_time": datetime.datetime.now()}
+    }
+
     HEATER_SETTINGS = None
 
     LAMPS_SETTINGS = None
 
-    LIGHT1_ADDRESS = 0x12
+    LIGHT1_ADDRESS = 0x20
     LIGHT1_PERCENT = [0, 0, 0, 0]
     LIGHT1_TEMP = 23.0
 
     # LIGHT2 ZONE
-    LIGHT2_ADDRESS = 0x14
+    LIGHT2_ADDRESS = 0x22
     LIGHT2_PERCENT = [0, 0, 0, 0]
 
     # FEEDER ZONE

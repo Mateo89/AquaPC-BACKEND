@@ -1,13 +1,9 @@
 import json
 
-from configobj import ConfigObj
-from register import Register
-import os.path
 import Helpers
+from register import Register
 
 def load_settings():
-
-    #Register.LOGS_FLAG =  ConfigObj.as_bool(config,"LOGS_FLAG")
 
     with open('water.settings', 'r') as data_file:
         Register.WATER_SETTINGS = json.load(data_file)
