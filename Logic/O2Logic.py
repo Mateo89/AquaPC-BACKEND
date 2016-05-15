@@ -7,8 +7,10 @@ from register import Register
 def o2_logic():
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_O2)]['override']:
         time_now = datetime.datetime.now()
-        if (time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_O2)]['override_time']):
+        if time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_O2)]['override_time']:
             return
+        else:
+            unblock_o2()
 
     if not Register.O2_SETTINGS['on']:
         turn_off()
@@ -35,11 +37,11 @@ def o2_logic():
 
 
 def block_o2():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_O2)]['override'] = True
+    PowerModHelper.override_switch(Register.I2C_POWERMOD_O2)
 
 
 def unblock_o2():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_O2)]['override'] = False
+    PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_O2)
 
 
 def turn_on():

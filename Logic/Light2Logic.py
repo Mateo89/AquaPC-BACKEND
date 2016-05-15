@@ -10,8 +10,10 @@ def light2_logic():
 
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override']:
         time_now = datetime.datetime.now()
-        if (time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT2)]['override_time']):
+        if time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT2)]['override_time']:
             return
+        else:
+            unblock()
 
     if not Register.LAMPS_SETTINGS['2']['on']:
         set_percent([0, 0, 0, 0])
@@ -44,15 +46,11 @@ def down_percent(down, channel):
 
 
 def block():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override'] = True
-    Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT2)]['override_time'] = datetime.datetime.now() \
-                                                                                          + datetime.timedelta(
-        minutes=Register.OVERRIDE_TIME)
+    PowerModHelper.override_switch(Register.I2C_POWERMOD_LIGHT2)
 
 
 def unblock():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT2)]['override'] = False
-    Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT2)]['override_time'] = None
+    PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_LIGHT2)
 
 
 def toggle_light():

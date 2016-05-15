@@ -8,8 +8,10 @@ def filter2_logic():
 
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_FILTER2)]['override']:
         time_now = datetime.datetime.now()
-        if (time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_FILTER2)]['override_time']):
+        if time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_FILTER2)]['override_time']:
             return
+        else:
+            unblock_filter()
 
     if Register.CHANGE_WATER_MODE:
         PowerModHelper.unset_switch(Register.I2C_POWERMOD_FILTER2)
@@ -18,11 +20,11 @@ def filter2_logic():
 
 
 def block_filter():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_FILTER2)]['override'] = True
+    PowerModHelper.override_switch(Register.I2C_POWERMOD_FILTER2)
 
 
 def unblock_filter():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_FILTER2)]['override'] = False
+    PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_FILTER2)
 
 
 def toggle_filter():

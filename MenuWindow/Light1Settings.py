@@ -11,7 +11,6 @@ class Light1SettingWindow():
     selected_index = 0
     redraw = True
 
-
     def __init__(self):
         self.lcd = Register.LCD
 

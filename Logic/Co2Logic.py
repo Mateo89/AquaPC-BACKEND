@@ -7,8 +7,10 @@ from register import Register
 def co2_logic():
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_CO2)]['override']:
         time_now = datetime.datetime.now()
-        if (time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_CO2)]['override_time']):
+        if time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_CO2)]['override_time']:
             return
+        else:
+            unblock_co2()
 
     if not Register.CO2_SETTINGS['on']:
         turn_off()

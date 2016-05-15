@@ -11,7 +11,7 @@ def load_settings():
     with open('lamp.settings', 'r') as data_file:
         Register.LAMPS_SETTINGS = json.load(data_file)
 
-    with open('bottles.settings','r') as data_file:
+    with open('bottles.settings', 'r') as data_file:
         Register.BOTTLE_SETTINGS = json.load(data_file)
 
     with open('heater.settings', 'r') as data_file:

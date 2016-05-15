@@ -1,3 +1,4 @@
+import copy
 import datetime
 
 
@@ -50,7 +51,7 @@ def process_times_between(times):
 
 def process_times_states(times):
 
-    percent = [0, 0, 0, 0]
+    percent_zero = [0, 0, 0, 0]
 
     # sprawdzenie jaki jest dzien tygodnia
     time_now = datetime.datetime.now()
@@ -58,7 +59,7 @@ def process_times_states(times):
 
     # jezeli dzien jest zly to pomijamy
     if not times[day_of_week]['on']:
-        return percent
+        return percent_zero
 
     # prejscie do danego dnia w czasach i sprawdzenie czy sie miescimy
 
@@ -68,10 +69,10 @@ def process_times_states(times):
                                       microsecond=0)
 
         if time_now < time_state:
-            return percent
+            return percent_zero
         else:
-            percent = state['percent']
-    return percent
+            percent_zero = copy.deepcopy(state['percent'])
+    return percent_zero
 
 
 

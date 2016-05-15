@@ -173,6 +173,7 @@ def settings_pomp_state_get(index):
         'name': Register.BOTTLE_SETTINGS[ids]['name'],
         'on': Register.BOTTLE_SETTINGS[ids]['on'],
         'ml_per_sec': Register.BOTTLE_SETTINGS[ids]['ml_per_sec'],
+        'ppm_per_ml': Register.BOTTLE_SETTINGS[ids]['ppm_per_ml'],
         'capacity': Register.BOTTLE_SETTINGS[ids]['capacity'],
         'state': Register.BOTTLE_SETTINGS[ids]['state'],
         'percent': Register.BOTTLE_SETTINGS[ids]['percent']
@@ -187,6 +188,7 @@ def settings_pomp_state_put(index):
     Register.BOTTLE_SETTINGS[ids]['name'] = request.json['name']
     Register.BOTTLE_SETTINGS[ids]['on'] = request.json['on']
     Register.BOTTLE_SETTINGS[ids]['ml_per_sec'] = float(request.json['ml_per_sec'])
+    Register.BOTTLE_SETTINGS[ids]['ppm_per_ml'] = float(request.json['ppm_per_ml'])
     Register.BOTTLE_SETTINGS[ids]['capacity'] = int(request.json['capacity'])
 
     settings.save_bottle()

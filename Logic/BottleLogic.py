@@ -70,10 +70,13 @@ class BottleThread(threading.Thread):
         if dose == 0:
             Helpers.log("Pomijanie pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] + " z powodu zerowej dawki")
             return
+        ml = round(dose / Register.BOTTLE_SETTINGS[bottle]['ppm_per_ml'], 2)
 
-        time_dose = dose * Register.BOTTLE_SETTINGS[bottle]['ml_per_sec']
-        Helpers.log("Podawanie dawki " + str(dose) + "ml z pojemnika: " + Register.BOTTLE_SETTINGS[bottle]['name'] +
-                    " przez czas: " + str(time_dose))
+        time_dose = ml * Register.BOTTLE_SETTINGS[bottle]['ml_per_sec']
+
+        Helpers.log("Podawanie dawki " + str(dose) + "ppm (" + str(ml) + "ml) z pojemnika: " +
+                    Register.BOTTLE_SETTINGS[bottle]['name'] +
+                    " przez czas: " + str(time_dose)) + "s"
 
         #if manual:
         #    Register.BOTTLE_MANUAL_REMAINING_DOSE = dose
@@ -89,7 +92,7 @@ class BottleThread(threading.Thread):
 
         # zmiana stanu pojemnika i obliczenie aktualnego procentu
 
-        state = Register.BOTTLE_SETTINGS[bottle]['state'] - dose
+        state = Register.BOTTLE_SETTINGS[bottle]['state'] - ml
         capacity = Register.BOTTLE_SETTINGS[bottle]['capacity']
 
         Register.BOTTLE_SETTINGS[bottle]['state'] = state

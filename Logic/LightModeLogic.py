@@ -1,5 +1,6 @@
 from register import Register
 
+
 def light_mode_logic():
 
     percent = 0

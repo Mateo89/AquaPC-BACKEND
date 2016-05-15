@@ -53,7 +53,7 @@ class Register:
         str(I2C_POWERMOD_HEATER_LED): {"name": "Grzalka LED", "on": False, "override": False, 'img': 'img/heater128.png'}
     }
 
-    OVERRIDE_TIME = 1
+    OVERRIDE_TIME = 20
 
     POWERMOD_DATA_OVERRIDE = {
         str(I2C_POWERMOD_LIGHT1): {"override_time": datetime.datetime.now()},

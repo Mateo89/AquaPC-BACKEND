@@ -71,8 +71,12 @@ class SwitchWindow:
                 self.redraw = True
 
             if self.selected_index == 6:
-                for switch in Register.POWERMOD_DATA.viewkeys():
-                    PowerModHelper.remove_override_switch(switch)
+                PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_FILTER1)
+                PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_FILTER2)
+                PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_CO2)
+                PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_O2)
+                PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_HEATER)
+                PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_HEATER_LED)
 
             if self.selected_index == 7:
                 DisplayRegister.set_menuWindow()

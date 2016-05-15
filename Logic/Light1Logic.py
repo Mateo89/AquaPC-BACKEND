@@ -2,6 +2,7 @@ import datetime
 import threading
 import time
 
+import Helpers
 from Helpers import PowerModHelper, TimesHelper, Light1ModHelper
 from register import Register
 
@@ -14,7 +15,6 @@ def light1_logic():
         Light1ModHelper.set_fun_speed(2)
     else:
         Light1ModHelper.set_fun_speed(0)
-
 
     if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT1)]['override']:
         time_now = datetime.datetime.now()
@@ -31,12 +31,13 @@ def light1_logic():
         if Register.LAMPS_SETTINGS['1']['water_change_on']:
             set_percent(Register.LAMPS_SETTINGS['1']['water_change_percent'])
     else:
-        percent = TimesHelper.process_times_states(Register.LAMPS_SETTINGS['1']['times'])
-        set_percent(percent)
+        percent1 = TimesHelper.process_times_states(Register.LAMPS_SETTINGS['1']['times'])
+        # Helpers.log(str(percent1))
+        set_percent(percent1)
 
 
-def set_percent(percent):
-    Register.LIGHT1_PERCENT = percent
+def set_percent(percent_1):
+    Register.LIGHT1_PERCENT = percent_1
 
 
 def up_percent(up, channel):
@@ -54,15 +55,11 @@ def down_percent(down, channel):
 
 
 def block():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT1)]['override'] = True
-    Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT1)]['override_time'] = datetime.datetime.now() \
-                                                                                          + datetime.timedelta(
-        minutes=Register.OVERRIDE_TIME)
+    PowerModHelper.override_switch(Register.I2C_POWERMOD_LIGHT1)
 
 
 def unblock():
-    Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT1)]['override'] = False
-    Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_LIGHT1)]['override_time'] = datetime.datetime.now()
+    PowerModHelper.remove_override_switch(Register.I2C_POWERMOD_LIGHT1)
 
 
 def toggle_light():
@@ -78,7 +75,6 @@ def turn_off():
 
 
 def process_percent(percent):
-
     lamp_percent = Register.LIGHT1_PERCENT
 
     for i in range(0, len(lamp_percent)):
@@ -99,7 +95,6 @@ def process_percent(percent):
 
 
 class Light1Thread(threading.Thread):
-
     percent = [0, 0, 0, 0]
 
     def __init__(self):
@@ -112,4 +107,3 @@ class Light1Thread(threading.Thread):
         while not Register.EXIT_FLAG:
             self.percent = process_percent(self.percent)
             time.sleep(1)
-
