@@ -3,6 +3,7 @@ from RPLCD import cleared
 from Display import DisplayRegister
 from register import Register
 from Helpers import LircEvents
+from Logic import WaterChangeLogic
 
 class MenuWindow:
 
@@ -21,11 +22,11 @@ class MenuWindow:
             DisplayRegister.set_mainWindow()
 
         if lirc_event == LircEvents.KEY_RIGHT:
-            self.selected_index = (self.selected_index + 1) % 4
+            self.selected_index = (self.selected_index + 1) % 5
             self.redraw = True
 
         if lirc_event == LircEvents.KEY_LEFT:
-            self.selected_index = (self.selected_index - 1) % 4
+            self.selected_index = (self.selected_index - 1) % 5
             self.redraw = True
 
         if lirc_event == LircEvents.KEY_OK:
@@ -36,6 +37,9 @@ class MenuWindow:
             if self.selected_index == 2:
                 DisplayRegister.set_light2_settings_window()
             if self.selected_index == 3:
+                WaterChangeLogic.toggle_water_change()
+                self.redraw_text()
+            if self.selected_index == 4:
                 DisplayRegister.set_mainWindow()
 
     def redraw_text(self):
@@ -58,6 +62,9 @@ class MenuWindow:
             with cleared(Register.LCD):
                 Register.LCD.write_string("      MENU\n\r    LAMPA 2")
         if self.selected_index == 3:
+            with cleared(Register.LCD):
+                Register.LCD.write_string("      MENU\n\rPODM. WODY  " + WaterChangeLogic.get_water_change_state())
+        if self.selected_index == 4:
             with cleared(Register.LCD):
                 Register.LCD.write_string("      MENU\n\r    WYJSCIE")
 
