@@ -30,13 +30,6 @@ def set_menuWindow():
     Register.CURRENT_SCREEN.redraw_text()
 
 
-def set_lightWindow():
-    if not DISPLAY_REGISTER['lightWindow']:
-        from MenuWindow import LightWindow
-        DISPLAY_REGISTER['lightWindow'] = LightWindow()
-    Register.CURRENT_SCREEN = DISPLAY_REGISTER['lightWindow']
-
-
 def set_bottleWindow():
     if not DISPLAY_REGISTER['bottleWindow']:
         from MenuWindow import BottleWindow
