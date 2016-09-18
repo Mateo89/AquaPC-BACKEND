@@ -35,6 +35,41 @@ def refill_bottle(bottle):
     settings.save_bottle()
 
 
+def get_weekly_dose(bottle):
+    ids = str(bottle)
+    weekly_dose = 0
+    for pomp_time in Register.BOTTLE_SETTINGS[ids]['times']:
+        if pomp_time['on']:
+            weekly_dose += pomp_time['dose']
+    return weekly_dose
+
+
+def get_connected_pomp_weekly_dose(bottle):
+    weekly_dose = get_weekly_dose(bottle)
+    return  round(weekly_dose * Register.BOTTLE_SETTINGS[str(bottle)]['connect_ppm_per_ppm'],3)
+
+
+def find_connected_poms(bottle):
+    connected_pomps = []
+
+    for connected in Register.BOTTLE_SETTINGS.viewkeys():
+        if Register.BOTTLE_SETTINGS[connected]['connect_pomp'] == int(bottle):
+            connected_pomps.append(int(connected))
+    return connected_pomps
+
+
+def get_connected_pomp_weekly_list(bottle):
+    connected = find_connected_poms(bottle)
+    list = []
+    for pomp in connected:
+        list.append(
+            {
+                "name": Register.BOTTLE_SETTINGS[str(pomp)]["name"],
+                "weekly_ppm_dose": get_connected_pomp_weekly_dose(pomp)
+            }
+        )
+    return list
+
 class BottleThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
@@ -76,7 +111,11 @@ class BottleThread(threading.Thread):
 
         Helpers.log("Podawanie dawki " + str(dose) + "ppm (" + str(ml) + "ml) z pojemnika: " +
                     Register.BOTTLE_SETTINGS[bottle]['name'] +
-                    " przez czas: " + str(time_dose)) + "s"
+                    " przez czas: " + str(time_dose) + "s")
+
+        if Register.BOTTLE_SETTINGS[bottle]['connect_pomp'] != -1:
+            connected_dose = dose * Register.BOTTLE_SETTINGS[bottle]['connect_ppm_per_ppm']
+            Helpers.log("Zostanie rowniez podana dawka " + str(dose) + "ppm  " + Register.BOTTLE_SETTINGS['connect_pomp']['name'])
 
         #if manual:
         #    Register.BOTTLE_MANUAL_REMAINING_DOSE = dose

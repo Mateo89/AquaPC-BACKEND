@@ -176,7 +176,10 @@ def settings_pomp_state_get(index):
         'ppm_per_ml': Register.BOTTLE_SETTINGS[ids]['ppm_per_ml'],
         'capacity': Register.BOTTLE_SETTINGS[ids]['capacity'],
         'state': Register.BOTTLE_SETTINGS[ids]['state'],
-        'percent': Register.BOTTLE_SETTINGS[ids]['percent']
+        'percent': Register.BOTTLE_SETTINGS[ids]['percent'],
+        'connect_pomp': Register.BOTTLE_SETTINGS[ids]['connect_pomp'],
+        'connect_ppm_per_ppm': Register.BOTTLE_SETTINGS[ids]['connect_ppm_per_ppm'],
+        'connected_pomp_list': BottleLogic.get_connected_pomp_weekly_list(ids)
     }
     return jsonify({'data': data})
 
@@ -190,6 +193,8 @@ def settings_pomp_state_put(index):
     Register.BOTTLE_SETTINGS[ids]['ml_per_sec'] = float(request.json['ml_per_sec'])
     Register.BOTTLE_SETTINGS[ids]['ppm_per_ml'] = float(request.json['ppm_per_ml'])
     Register.BOTTLE_SETTINGS[ids]['capacity'] = int(request.json['capacity'])
+    Register.BOTTLE_SETTINGS[ids]['connect_pomp'] = int(request.json['connect_pomp'])
+    Register.BOTTLE_SETTINGS[ids]['connect_ppm_per_ppm'] = float(request.json['connect_ppm_per_ppm'])
 
     settings.save_bottle()
     return settings_pomp_state_get(index)
