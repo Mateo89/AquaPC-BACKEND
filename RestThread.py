@@ -151,6 +151,12 @@ def settings_heater_put():
     return settings_heater_get()
 
 
+@app.route('/api/settings/pompsummary', methods=['GET'])
+def settings_pomp_summary_get():
+    data = BottleLogic.get_bottles_summary()
+    return jsonify({'data': data })
+
+
 @app.route('/api/settings/pomp/<int:index>/times', methods=['GET'])
 def settings_pomp_times_get(index):
     data = Register.BOTTLE_SETTINGS[str(index)]['times']

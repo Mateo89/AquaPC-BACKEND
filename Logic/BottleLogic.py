@@ -70,6 +70,35 @@ def get_connected_pomp_weekly_list(bottle):
         )
     return list
 
+
+def get_bottles_summary():
+
+    data = []
+
+    for bottle in Register.BOTTLE_SETTINGS.viewkeys():
+
+        weekly_dose = get_weekly_dose(bottle)
+        add_dose = 0
+
+        connected = find_connected_poms(bottle)
+        for pomp in connected:
+            add_dose +=  get_connected_pomp_weekly_dose(pomp)
+
+        weekly_dose = round(weekly_dose,3)
+        add_dose = round(add_dose,3)
+        sum = weekly_dose + add_dose
+        sum = round(sum,3)
+
+        data.append({
+            "id": bottle,
+            "name": Register.BOTTLE_SETTINGS[bottle]["name"],
+            "dose": get_weekly_dose(bottle),
+            "add_dose": add_dose,
+            "sum": sum
+        })
+    return data
+
+
 class BottleThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
