@@ -144,7 +144,8 @@ class BottleThread(threading.Thread):
 
         if Register.BOTTLE_SETTINGS[bottle]['connect_pomp'] != -1:
             connected_dose = dose * Register.BOTTLE_SETTINGS[bottle]['connect_ppm_per_ppm']
-            Helpers.log("Zostanie rowniez podana dawka " + str(dose) + "ppm  " + Register.BOTTLE_SETTINGS['connect_pomp']['name'])
+            connected_pomp_name = Register.BOTTLE_SETTINGS[str(Register.BOTTLE_SETTINGS[bottle]['connect_pomp'])]['name']
+            Helpers.log("Zostanie rowniez podana dawka " + str(connected_dose) + "ppm  " + connected_pomp_name)
 
         #if manual:
         #    Register.BOTTLE_MANUAL_REMAINING_DOSE = dose
