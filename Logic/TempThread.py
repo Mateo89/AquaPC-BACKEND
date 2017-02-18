@@ -20,12 +20,12 @@ class TempThread(threading.Thread):
             lines = output.split('\n')
             try:
                 float(lines[0])
-                #float(lines[1])
+                float(lines[1])
             except ValueError:
                 continue
 
             Register.WATER_TEMP = float(lines[0])/1000
-            #Register.AIR_TEMP = float(lines[1])
+            Register.LIGHT1_TEMP = float(lines[1])/1000
 
             for x in range(0, 30):
                 time.sleep(1)
