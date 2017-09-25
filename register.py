@@ -21,7 +21,13 @@ class Register:
     WATER_SETTINGS = None
 
     WATER_TEMP = 25.0
+    WATER_TEMP_UPDATE_DATE = 'Nigdy'
+
     AIR_TEMP = 25.0
+    AIR_TEMP_UPDATE_DATE = 'Nigdy'
+
+    PH_VALUE = 6.5
+    PH_UPDATE_DATE = 'Nigdy'
 
 
     # 0 - night
@@ -70,12 +76,13 @@ class Register:
 
     LAMPS_SETTINGS = None
 
-    LIGHT1_ADDRESS = 0x20
+    LIGHT1_ADDRESS = 0x22
     LIGHT1_PERCENT = [0, 0, 0, 0]
     LIGHT1_TEMP = 23.0
+    LIGHT1_TEMP_UPDATE_DATE = 'Nigdy'
 
     # LIGHT2 ZONE
-    LIGHT2_ADDRESS = 0x22
+    LIGHT2_ADDRESS = 0x20
     LIGHT2_PERCENT = [0, 0, 0, 0]
 
     # FEEDER ZONE
@@ -92,8 +99,10 @@ class Register:
     BOTTLE_SETTINGS = None
 
     CO2_SETTINGS = None
+    CO2_PH_FLAG = False
     O2_SETTINGS = None
     FILTER_SETTINGS = None
+    PH_SETTINGS = None
 
     @staticmethod
     def initRegister():

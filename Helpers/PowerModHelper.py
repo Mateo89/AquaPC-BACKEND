@@ -39,7 +39,7 @@ def toggle_switch(switch):
 
 
 def update_flag(switch, value):
-    Helpers.log("Zmiana wartosci flagi: " + Register.POWERMOD_DATA[str(switch)]['name'] + " na " + str(value))
+    #Helpers.log("Zmiana wartosci flagi: " + Register.POWERMOD_DATA[str(switch)]['name'] + " na " + str(value))
     Register.POWERMOD_DATA[str(switch)]['on'] = value
 
 

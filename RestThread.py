@@ -4,6 +4,7 @@ import threading
 import time
 
 import settings
+import Helpers
 from Helpers import PowerModHelper
 from Logic import BottleLogic
 from register import Register
@@ -17,7 +18,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/api/state/water')
 def state_water_get():
-    return jsonify({"warning": Register.WATER_SETTINGS['warning'], "temp": Register.WATER_TEMP})
+    return jsonify({"warning": Register.WATER_SETTINGS['warning'], "temp": Register.WATER_TEMP, 'date': Register.WATER_TEMP_UPDATE_DATE})
 
 
 @app.route('/api/state/air')
@@ -28,12 +29,12 @@ def state_air_get():
 @app.route('/api/state/lamp')
 def state_lamp_get():
     return jsonify({'warning': Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_LIGHT1)]['warning'],
-                    'temp': Register.LIGHT1_TEMP})
+                    'temp': Register.LIGHT1_TEMP, 'date': Register.LIGHT1_TEMP_UPDATE_DATE})
 
 
 @app.route('/api/state/ph')
 def state_ph_get():
-    return jsonify({'warning': False, 'value': 6.5})
+    return jsonify({'warning': False, 'value': Register.PH_VALUE, 'date': Register.PH_UPDATE_DATE})
 
 
 @app.route('/api/state/bottle')
@@ -166,8 +167,15 @@ def settings_pomp_times_get(index):
 @app.route('/api/settings/pomp/<int:index>/times', methods=['PUT'])
 def settings_pomp_times_put(index):
 
-    Register.BOTTLE_SETTINGS[str(index)]['times'] = request.json
+    ids = str(index)
+    name = Register.BOTTLE_SETTINGS[str(index)]['name']
+
+    weekly_dose_old = BottleLogic.get_weekly_dose(index)
+    Register.BOTTLE_SETTINGS[ids]['times'] = request.json
+    weekly_dose_new = BottleLogic.get_weekly_dose(index)
     settings.save_bottle()
+
+    Helpers.log("Zmiana tygodniowej dawki: " + name + " " + str(weekly_dose_old) + " ppm na " + str(weekly_dose_new) + " ppm" )
     return settings_pomp_times_get(index)
 
 
@@ -256,6 +264,25 @@ def settings_co2_state_put():
 
     settings.save_co2()
     return settings_co2_state_get()
+
+
+@app.route('/api/settings/ph/state', methods=['GET'])
+def settings_ph_state_get():
+    data = {
+        'value': Register.PH_SETTINGS['value'],
+        'delta': Register.PH_SETTINGS['delta']
+    }
+    return jsonify({'data': data})
+
+
+@app.route('/api/settings/ph/state', methods=['PUT'])
+def settings_ph_state_put():
+
+    Register.PH_SETTINGS['value'] = float(request.json['value'])
+    Register.PH_SETTINGS['delta'] = float(request.json['delta'])
+
+    settings.save_ph()
+    return settings_ph_state_get()
 
 
 @app.route('/api/settings/o2/times', methods=['GET'])

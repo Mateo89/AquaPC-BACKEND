@@ -26,6 +26,9 @@ def load_settings():
     with open('filter.settings', 'r') as data_file:
         Register.FILTER_SETTINGS = json.load(data_file)
 
+    with open('ph.settings', 'r') as data_file:
+        Register.PH_SETTINGS = json.load(data_file)
+
     Helpers.log("Wczytano ustawienia")
 
 
@@ -99,3 +102,12 @@ def save_filter():
         data_file.write(configString)
         data_file.close()
         Helpers.log("Zapisano ustawienia Filtrow")
+
+
+def save_ph():
+    with open('ph.settings', 'w') as data_file:
+        configString = json.dumps(Register.PH_SETTINGS, default=lambda o: o.__dict__, sort_keys=True, indent=4,
+                                  separators=(',', ': '))
+        data_file.write(configString)
+        data_file.close()
+        Helpers.log("Zapisano ustawienia PH")

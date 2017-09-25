@@ -38,9 +38,10 @@ def refill_bottle(bottle):
 def get_weekly_dose(bottle):
     ids = str(bottle)
     weekly_dose = 0
-    for pomp_time in Register.BOTTLE_SETTINGS[ids]['times']:
-        if pomp_time['on']:
-            weekly_dose += pomp_time['dose']
+    if Register.BOTTLE_SETTINGS[ids]['on']:
+        for pomp_time in Register.BOTTLE_SETTINGS[ids]['times']:
+            if pomp_time['on']:
+                weekly_dose += pomp_time['dose']
     return weekly_dose
 
 

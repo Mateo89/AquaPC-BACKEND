@@ -18,6 +18,10 @@ from Logic import Filter1Logic
 from Logic import Filter2Logic
 from Logic import LightModeLogic
 from Logic import BottleLogic
+from Logic import DbDriver
+from Logic import PhThread
+from Logic import PhLogic
+import O2Thread
 
 
 class Logic(threading.Thread):
@@ -35,6 +39,9 @@ class Logic(threading.Thread):
         self.threads.append(Light1Logic.Light1Thread())
         self.threads.append(Light2Logic.Light2Thread())
         self.threads.append(BottleLogic.BottleThread())
+        self.threads.append(DbDriver.DbThread())
+        self.threads.append(PhThread.PhThread())
+        self.threads.append(O2Thread.O2Thread())
 
         PowerModHelper.update_data()
 
@@ -62,9 +69,9 @@ class Logic(threading.Thread):
             WaterTempLogic.water_temp_logic()
 
             Co2Logic.co2_logic()
-            O2Logic.o2_logic()
             Filter1Logic.filter1_logic()
             Filter2Logic.filter2_logic()
+            PhLogic.ph_logic()
 
             LightModeLogic.light_mode_logic()
             time.sleep(0.2)

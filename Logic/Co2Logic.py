@@ -31,10 +31,7 @@ def co2_logic():
         turn_on()
         return
 
-    # jezeli nie dziala 24 no to musimy sprawdzic dzien i godzine
-    flag = TimesHelper.process_times_between(Register.CO2_SETTINGS['times'])
-
-    if flag:
+    if Register.CO2_PH_FLAG:
         turn_on()
     else:
         turn_off()
@@ -49,12 +46,26 @@ def unblock_co2():
 
 
 def turn_on():
+    #ustawienie czasu start
     PowerModHelper.set_switch(Register.I2C_POWERMOD_CO2)
 
 
 def turn_off():
+    #ustawienie czasu stop
     PowerModHelper.unset_switch(Register.I2C_POWERMOD_CO2)
 
 
 def toggle_co2():
     PowerModHelper.toggle_switch(Register.I2C_POWERMOD_CO2)
+
+
+def save_co2_use():
+    pass
+
+
+def turn_on_ph():
+    Register.CO2_PH_FLAG = True
+
+
+def turn_off_ph():
+    Register.CO2_PH_FLAG = False

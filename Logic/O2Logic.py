@@ -5,35 +5,7 @@ from register import Register
 
 
 def o2_logic():
-    if Register.POWERMOD_DATA[str(Register.I2C_POWERMOD_O2)]['override']:
-        time_now = datetime.datetime.now()
-        if time_now < Register.POWERMOD_DATA_OVERRIDE[str(Register.I2C_POWERMOD_O2)]['override_time']:
-            return
-        else:
-            unblock_o2()
-
-    if not Register.O2_SETTINGS['on']:
-        turn_off()
-        return
-
-    if Register.CHANGE_WATER_MODE:
-        if Register.O2_SETTINGS['water_change_off']:
-            turn_off()
-            return
-
-    # sprawdzenie czy dzialac ma 24h
-    if Register.O2_SETTINGS['full_day']:
-        turn_on()
-        return
-
-    # jezeli nie dziala 24 no to musimy sprawdzic dzien i godzine
-
-    flag = TimesHelper.process_times_between(Register.O2_SETTINGS['times'])
-
-    if flag:
-        turn_on()
-    else:
-        turn_off()
+    pass
 
 
 def block_o2():
